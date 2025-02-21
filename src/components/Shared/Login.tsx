@@ -15,7 +15,7 @@ import { Button } from "../ui/button";
 import { useState } from "react";
 import Link from "next/link";
 
-const Register = () => {
+const Login = () => {
   const [shotPassword, setShowPassword] = useState<boolean>();
   const from = useForm();
   const submit: SubmitHandler<FieldValues> = (data) => {
@@ -29,29 +29,10 @@ const Register = () => {
           className="max-w-md  border rounded-md p-5  mx-auto"
         >
           <h1 className=" text-3xl font-bold text-center py-5 md:text-4xl">
-            Registration From
+            Login From
           </h1>
           <Form {...from}>
             <form onSubmit={from.handleSubmit(submit)}>
-              <FormField
-                control={from.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Name</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        type="text"
-                        placeholder="Enter Your Name"
-                        value={field.value || ""}
-                      />
-                    </FormControl>
-                    <FormDescription />
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
               <div className="relative">
                 <FormField
                   control={from.control}
@@ -106,9 +87,9 @@ const Register = () => {
             </form>
           </Form>
           <div className="flex gap-2 text-sm md:text-[16px] justify-center">
-            <p>Already have an account?</p>
-            <Link href="/login" className="text-blue-600 hover:underline">
-              Login
+            <p>Don,t have an account?</p>
+            <Link href="/register" className="text-blue-600 hover:underline">
+              Register
             </Link>
           </div>
         </div>
@@ -117,4 +98,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;
