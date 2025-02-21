@@ -2,16 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-
-.container{
-    max-width: 1120px;
-    margin: 0 auto;
-    padding: 0 20px;
+.container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 @layer base {
   :root {
-    --background: 0 0% 84%;
+    --background: 0 0% 96%;
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;

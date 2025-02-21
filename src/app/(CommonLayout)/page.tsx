@@ -1,5 +1,11 @@
+import Banner from "../../components/modules/Home/Banner";
+
 const CommonPage = () => {
-  return <div>CommonPage</div>;
+  return (
+    <div>
+      <Banner />
+    </div>
+  );
 };
 
 export default CommonPage;
