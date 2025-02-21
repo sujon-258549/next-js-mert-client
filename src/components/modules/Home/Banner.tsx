@@ -1,20 +1,21 @@
 import { Button } from "@/components/ui/button";
-
+import Image from "next/image";
+import bannerPng from "../../../assets/Banner/";
 const Banner = () => {
   return (
     <div>
-      <section
-        style={{
-          background:
-            'linear-gradient(to bottom,  rgba(255, 255, 255, 0), #ffffffbe), url("/bannerbg2.png"), url("/banner.png")',
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          height: "100vh", // Optional: Full viewport height
-        }}
-        className=""
-      >
-        <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
+      <section className=" my-10">
+        <div
+          style={{
+            background:
+              'linear-gradient(to bottom,  rgba(255, 255, 255, 0), #ffffffbe), url("/bannerbg2.png"), url("/banner.png")',
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            height: "100vh", // Optional: Full viewport height
+          }}
+          className="grid rounded-md md:px-10  px-4 mx-auto lg:gap-8 xl:gap-0  lg:grid-cols-12"
+        >
           <div className="mr-auto place-self-center lg:col-span-7">
             <h1 className="  md:text-4xl text-3xl lg:text-5xl font-extrabold">
               Don,t Miss Out on <br /> These Unbeatable Black <br /> Friday
@@ -32,10 +33,7 @@ const Banner = () => {
             </Button>
           </div>
           <div className="hidden lg:mt-0 lg:col-span-5 lg:flex">
-            <img
-              src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/phone-mockup.png"
-              alt="mockup"
-            />
+            <Image width={250} height={250} src={} />
           </div>
         </div>
       </section>
