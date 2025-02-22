@@ -2,8 +2,10 @@ import Register from "@/components/Shared/Register";
 
 const RegisterPage = () => {
   return (
-    <div>
-      <Register />
+    <div className="w-screen h-screen md:flex justify-center items-center">
+      <div>
+        <Register />
+      </div>
     </div>
   );
 };

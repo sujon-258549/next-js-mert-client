@@ -22,13 +22,13 @@ const Register = () => {
     console.log(data);
   };
   return (
-    <section className=" mt-5 px-5 md:mt-20">
+    <section className=" py-5 lg:py-0 px-5">
       <div className="">
         <div
           style={{ boxShadow: "1px 1px 10px" }}
-          className="max-w-md  border rounded-md p-5  mx-auto"
+          className=" w-full md:w-[500px]  border rounded-md p-5 "
         >
-          <h1 className=" text-3xl font-bold text-center py-5 md:text-4xl">
+          <h1 className="text-2xl md:text-3xl font-bold text-center py-5 lg:text-4xl">
             Registration From
           </h1>
           <Form {...from}>
@@ -93,6 +93,25 @@ const Register = () => {
                   </FormItem>
                 )}
               />
+              <FormField
+                control={from.control}
+                name="conformPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Conform Password</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        type={shotPassword ? "text" : "password"}
+                        placeholder="Enter Your password"
+                        value={field.value || ""}
+                      />
+                    </FormControl>
+                    <FormDescription />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <div className="flex gap-2">
                 <input
                   onChange={() => setShowPassword(!shotPassword)}
@@ -107,7 +126,7 @@ const Register = () => {
           </Form>
           <div className="flex gap-2 text-sm md:text-[16px] justify-center">
             <p>Already have an account?</p>
-            <Link href="/login" className="text-blue-600 hover:underline">
+            <Link href="/login" className="text-customcolor hover:underline">
               Login
             </Link>
           </div>

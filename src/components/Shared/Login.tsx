@@ -18,17 +18,20 @@ import Link from "next/link";
 const Login = () => {
   const [shotPassword, setShowPassword] = useState<boolean>();
   const from = useForm();
+  const password = from.watch("password");
+  const conformPassword = from.watch("conformPassword");
+  console.log(password, conformPassword);
   const submit: SubmitHandler<FieldValues> = (data) => {
     console.log(data);
   };
   return (
-    <section className=" mt-5 px-5 md:mt-20">
+    <section className="px-5">
       <div className="">
         <div
           style={{ boxShadow: "1px 1px 10px" }}
-          className="max-w-md  border rounded-md p-5  mx-auto"
+          className=" w-full md:w-[500px]  border rounded-md p-5 "
         >
-          <h1 className=" text-3xl font-bold text-center py-5 md:text-4xl">
+          <h1 className="text-2xl md:text-3xl font-bold text-center py-5 lg:text-4xl">
             Login From
           </h1>
           <Form {...from}>
@@ -76,6 +79,7 @@ const Login = () => {
               />
               <div className="flex gap-2">
                 <input
+                  className="text-customcolor"
                   onChange={() => setShowPassword(!shotPassword)}
                   type="checkbox"
                 />
@@ -88,7 +92,7 @@ const Login = () => {
           </Form>
           <div className="flex gap-2 text-sm md:text-[16px] justify-center">
             <p>Don,t have an account?</p>
-            <Link href="/register" className="text-blue-600 hover:underline">
+            <Link href="/register" className="text-customcolor hover:underline">
               Register
             </Link>
           </div>

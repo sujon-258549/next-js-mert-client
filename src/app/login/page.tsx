@@ -2,8 +2,10 @@ import Login from "@/components/Shared/Login";
 
 const page = () => {
   return (
-    <div>
-      <Login />
+    <div className="w-screen h-screen md:flex justify-center items-center">
+      <div>
+        <Login />
+      </div>
     </div>
   );
 };

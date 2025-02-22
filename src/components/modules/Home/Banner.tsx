@@ -49,7 +49,7 @@ const Banner = () => {
               <Button className="inline-flex w-full md:w-32 items-center rounded-full hover:text-black text-white justify-center px-5 py-3 text-base font-medium border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100">
                 Buy Now
               </Button>
-              <Button className="inline-flex w-full md:w-32 rounded-full items-center hover:text-white justify-center px-5 py-3 text-base font-medium border border-gray-300 bg-transparent hover:bg-gray-900 text-black focus:ring-4 focus:ring-gray-100">
+              <Button className="inline-flex w-full md:w-32 rounded-full items-center hover:text-white justify-center px-5 py-3 text-base font-medium border border-gray-300 bg-transparent hover:bg-customcolor text-black focus:ring-4 focus:ring-gray-100">
                 All Products
               </Button>
             </div>
