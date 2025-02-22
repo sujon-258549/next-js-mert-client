@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${urbanistFont.className}`}>
-        <Toaster /> {children}
+        <Toaster richColors position="top-center" /> {children}
       </body>
     </html>
   );

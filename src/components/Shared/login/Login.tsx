@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
+import ReCAPTCHA from "react-google-recaptcha";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import {
   Form,
@@ -17,15 +18,26 @@ import Link from "next/link";
 import SingleLogo from "../../utils/SingleLogo";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "./login";
-
+import { verifyRecapta } from "../../../server/AuthServer/index";
 const Login = () => {
   const [shotPassword, setShowPassword] = useState<boolean>();
+  const [recaptaStatus, setRecaptaStatus] = useState(false);
   const from = useForm({
     resolver: zodResolver(loginSchema),
   });
   const email = from.watch("email");
   const password = from.watch("password");
-  const isDisabled = !email || !password;
+  const isDisabled = !email || !password || !recaptaStatus;
+  const handelRecapta = async (value: string | null) => {
+    try {
+      const res = await verifyRecapta(value!);
+      if (res?.success) {
+        setRecaptaStatus(true);
+      }
+    } catch (err: any) {
+      console.log(err);
+    }
+  };
   const submit: SubmitHandler<FieldValues> = (data) => {
     console.log(data);
   };
@@ -88,6 +100,13 @@ const Login = () => {
                   </FormItem>
                 )}
               />
+              <div>
+                <ReCAPTCHA
+                  sitekey={process.env.NEXT_PUBLIC_RECAPTA_CLIENT_KYE}
+                  onChange={handelRecapta}
+                />
+              </div>
+              ,
               <div className="flex gap-2">
                 <input
                   className="text-customcolor"
