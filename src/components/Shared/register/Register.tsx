@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+
 import {
   Form,
   FormControl,
@@ -9,28 +10,51 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
+} from "../../ui/form";
+import { Input } from "../../ui/input";
+import { Button } from "../../ui/button";
 import { useState } from "react";
 import Link from "next/link";
-
+import SingleLogo from "../../utils/SingleLogo";
+import { registerSchema } from "./register.zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 const Register = () => {
   const [shotPassword, setShowPassword] = useState<boolean>();
-  const from = useForm();
+  const from = useForm({
+    resolver: zodResolver(registerSchema),
+  });
+  const password = from.watch("password");
+  const conformPassword = from.watch("conformPassword");
+  const name = from.watch("name");
+  const email = from.watch("email");
   const submit: SubmitHandler<FieldValues> = (data) => {
     console.log(data);
   };
+  const isDisabled =
+    password !== conformPassword ||
+    !name ||
+    !email ||
+    !password ||
+    !conformPassword;
   return (
-    <section className=" py-5 lg:py-0 px-5">
+    <section className="px-5">
       <div className="">
         <div
           style={{ boxShadow: "1px 1px 10px" }}
           className=" w-full md:w-[500px]  border rounded-md p-5 "
         >
-          <h1 className="text-2xl md:text-3xl font-bold text-center py-5 lg:text-4xl">
-            Registration From
-          </h1>
+          <div className="flex items-center gap-3">
+            <div className="">
+              <SingleLogo />
+            </div>
+            <div className="">
+              {" "}
+              <h1 className="text-xl font-bold lg:text-2xl">
+                Registration Form
+              </h1>
+              <p>Join us, start today</p>
+            </div>
+          </div>
           <Form {...from}>
             <form onSubmit={from.handleSubmit(submit)}>
               <FormField
@@ -98,17 +122,22 @@ const Register = () => {
                 name="conformPassword"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Conform Password</FormLabel>
+                    <FormLabel>Confirm Password</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
                         type={shotPassword ? "text" : "password"}
-                        placeholder="Enter Your password"
+                        placeholder="Enter Your Confirm password"
                         value={field.value || ""}
                       />
                     </FormControl>
+                    {/* Display error message if passwords do not match */}
+                    {password &&
+                      conformPassword &&
+                      password !== conformPassword && (
+                        <FormMessage>Passwords do not match</FormMessage>
+                      )}
                     <FormDescription />
-                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -119,7 +148,11 @@ const Register = () => {
                 />
                 <p>{shotPassword ? "Hide Password" : "Show Password"}</p>
               </div>
-              <Button className="w-full my-5" type="submit">
+              <Button
+                disabled={isDisabled}
+                className="w-full my-5"
+                type="submit"
+              >
                 Submit
               </Button>
             </form>

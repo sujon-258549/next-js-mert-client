@@ -9,18 +9,23 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
+} from "../../ui/form";
+import { Input } from "../../ui/input";
+import { Button } from "../../ui/button";
 import { useState } from "react";
 import Link from "next/link";
+import SingleLogo from "../../utils/SingleLogo";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { loginSchema } from "./login";
 
 const Login = () => {
   const [shotPassword, setShowPassword] = useState<boolean>();
-  const from = useForm();
+  const from = useForm({
+    resolver: zodResolver(loginSchema),
+  });
+  const email = from.watch("email");
   const password = from.watch("password");
-  const conformPassword = from.watch("conformPassword");
-  console.log(password, conformPassword);
+  const isDisabled = !email || !password;
   const submit: SubmitHandler<FieldValues> = (data) => {
     console.log(data);
   };
@@ -31,9 +36,15 @@ const Login = () => {
           style={{ boxShadow: "1px 1px 10px" }}
           className=" w-full md:w-[500px]  border rounded-md p-5 "
         >
-          <h1 className="text-2xl md:text-3xl font-bold text-center py-5 lg:text-4xl">
-            Login From
-          </h1>
+          <div className="flex items-center gap-3">
+            <div className="">
+              <SingleLogo />
+            </div>
+            <div className="">
+              <h1 className="text-xl font-bold lg:text-2xl">Login Form</h1>
+              <p>Welcome back</p>
+            </div>
+          </div>
           <Form {...from}>
             <form onSubmit={from.handleSubmit(submit)}>
               <div className="relative">
@@ -85,7 +96,11 @@ const Login = () => {
                 />
                 <p>{shotPassword ? "Hide Password" : "Show Password"}</p>
               </div>
-              <Button className="w-full my-5" type="submit">
+              <Button
+                disabled={isDisabled}
+                className="w-full my-5"
+                type="submit"
+              >
                 Submit
               </Button>
             </form>
