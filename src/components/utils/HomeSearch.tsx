@@ -31,7 +31,7 @@ const HomeSearch = () => {
           </div>
           <button
             type="submit"
-            className="p-2 ms-2 text-sm -ml-7 z-10 font-medium text-white rounded-full bg-gray-300"
+            className="p-2 ms-2 text-sm -ml-7 z-10 font-medium text-white rounded-full bg-black"
           >
             <svg
               className="w-4 h-4"

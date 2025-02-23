@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Urbanist } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
+import Provider from "@/providers/Providers";
 // Import the font and apply the class
 const urbanistFont = Urbanist({
   subsets: ["latin"],
@@ -19,10 +20,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${urbanistFont.className}`}>
-        <Toaster richColors position="top-center" /> {children}
-      </body>
-    </html>
+    <Provider>
+      <html lang="en">
+        <body className={`${urbanistFont.className}`}>
+          <Toaster richColors position="top-center" /> {children}
+        </body>
+      </html>
+    </Provider>
   );
 }
