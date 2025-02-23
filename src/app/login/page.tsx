@@ -1,5 +1,4 @@
-import Login from "@/components/Shared/login/Login";
-
+import Login from "../../components/Shared/auth/login/Login";
 const page = () => {
   return (
     <div className="w-screen h-screen md:flex justify-center items-center">

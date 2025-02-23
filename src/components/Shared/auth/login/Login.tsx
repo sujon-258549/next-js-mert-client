@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
+"use client";
+import ReCAPTCHA from "react-google-recaptcha";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
@@ -10,32 +11,57 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../../ui/form";
-import { Input } from "../../ui/input";
-import { Button } from "../../ui/button";
+} from "../../../ui/form";
+import { Input } from "../../../ui/input";
+import { Button } from "../../../ui/button";
 import { useState } from "react";
 import Link from "next/link";
-import SingleLogo from "../../utils/SingleLogo";
-import { registerSchema } from "./register.zod";
+import SingleLogo from "../../../utils/SingleLogo";
 import { zodResolver } from "@hookform/resolvers/zod";
-const Register = () => {
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { loginSchema } from "./login.ts";
+import { loginUser, verifyRecapta } from "../../../../server/AuthServer/index";
+const Login = () => {
+  const router = useRouter();
   const [shotPassword, setShowPassword] = useState<boolean>();
+  const [recaptaStatus, setRecaptaStatus] = useState(false);
   const from = useForm({
-    resolver: zodResolver(registerSchema),
+    resolver: zodResolver(loginSchema),
   });
-  const password = from.watch("password");
-  const conformPassword = from.watch("conformPassword");
-  const name = from.watch("name");
   const email = from.watch("email");
-  const submit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
+  const password = from.watch("password");
+  const isDisabled = !email || !password || !recaptaStatus;
+  const handelRecapta = async (value: string | null) => {
+    try {
+      const res = await verifyRecapta(value!);
+      if (res?.success) {
+        setRecaptaStatus(true);
+      }
+    } catch (err: any) {
+      console.log(err);
+    }
   };
-  const isDisabled =
-    password !== conformPassword ||
-    !name ||
-    !email ||
-    !password ||
-    !conformPassword;
+  const submit: SubmitHandler<FieldValues> = async (data) => {
+    const toastId = toast.loading("User Creating...............", {
+      duration: 2000,
+    });
+    const userData = {
+      email: data.email,
+      password: data.password,
+    };
+    try {
+      const result = await loginUser(userData);
+      if (result?.success) {
+        toast.success(result?.message, { id: toastId, duration: 2000 });
+        router.push("/");
+      } else {
+        toast.error(result?.message, { id: toastId, duration: 2000 });
+      }
+    } catch (error: any) {
+      return Error(error);
+    }
+  };
   return (
     <section className="px-5">
       <div className="">
@@ -48,34 +74,12 @@ const Register = () => {
               <SingleLogo />
             </div>
             <div className="">
-              {" "}
-              <h1 className="text-xl font-bold lg:text-2xl">
-                Registration Form
-              </h1>
-              <p>Join us, start today</p>
+              <h1 className="text-xl font-bold lg:text-2xl">Login Form</h1>
+              <p>Welcome back</p>
             </div>
           </div>
           <Form {...from}>
             <form onSubmit={from.handleSubmit(submit)}>
-              <FormField
-                control={from.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Name</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        type="text"
-                        placeholder="Enter Your Name"
-                        value={field.value || ""}
-                      />
-                    </FormControl>
-                    <FormDescription />
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
               <div className="relative">
                 <FormField
                   control={from.control}
@@ -117,32 +121,16 @@ const Register = () => {
                   </FormItem>
                 )}
               />
-              <FormField
-                control={from.control}
-                name="conformPassword"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Confirm Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        type={shotPassword ? "text" : "password"}
-                        placeholder="Enter Your Confirm password"
-                        value={field.value || ""}
-                      />
-                    </FormControl>
-                    {/* Display error message if passwords do not match */}
-                    {password &&
-                      conformPassword &&
-                      password !== conformPassword && (
-                        <FormMessage>Passwords do not match</FormMessage>
-                      )}
-                    <FormDescription />
-                  </FormItem>
-                )}
-              />
+              <div>
+                <ReCAPTCHA
+                  sitekey={process.env.NEXT_PUBLIC_RECAPTA_CLIENT_KYE}
+                  onChange={handelRecapta}
+                />
+              </div>
+              ,
               <div className="flex gap-2">
                 <input
+                  className="text-customcolor"
                   onChange={() => setShowPassword(!shotPassword)}
                   type="checkbox"
                 />
@@ -158,9 +146,9 @@ const Register = () => {
             </form>
           </Form>
           <div className="flex gap-2 text-sm md:text-[16px] justify-center">
-            <p>Already have an account?</p>
-            <Link href="/login" className="text-customcolor hover:underline">
-              Login
+            <p>Don,t have an account?</p>
+            <Link href="/register" className="text-customcolor hover:underline">
+              Register
             </Link>
           </div>
         </div>
@@ -169,4 +157,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;
