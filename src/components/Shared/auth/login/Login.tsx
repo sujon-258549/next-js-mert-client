@@ -22,7 +22,9 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { loginSchema } from "./login.ts";
 import { loginUser, verifyRecapta } from "../../../../server/AuthServer/index";
+import { useUser } from "../../../../Context/UserContext.tsx";
 const Login = () => {
+  const { setIsLoading } = useUser();
   const router = useRouter();
   const [shotPassword, setShowPassword] = useState<boolean>();
   const [recaptaStatus, setRecaptaStatus] = useState(false);
@@ -54,7 +56,9 @@ const Login = () => {
       const result = await loginUser(userData);
       if (result?.success) {
         toast.success(result?.message, { id: toastId, duration: 2000 });
+        setIsLoading(true);
         router.push("/");
+        // window.location.reload();
       } else {
         toast.error(result?.message, { id: toastId, duration: 2000 });
       }
@@ -62,6 +66,7 @@ const Login = () => {
       return Error(error);
     }
   };
+
   return (
     <section className="px-5">
       <div className="">

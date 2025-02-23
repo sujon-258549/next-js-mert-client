@@ -18,11 +18,11 @@ import { LogIn, LogOut } from "lucide-react";
 import { logout } from "@/server/AuthServer";
 
 const Navbar = () => {
-  const { user, setIsLoading } = useUser();
-  console.log(user);
+  const { user, setIsLoading, isLoading } = useUser();
+  console.log(isLoading);
   const handelLogOut = () => {
     logout();
-    setIsLoading(false);
+    setIsLoading(true);
   };
   return (
     <section className="border-b border-slate-300">
