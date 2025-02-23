@@ -54,13 +54,15 @@ const Navbar = () => {
             {user ? (
               <>
                 {/* Shop Button */}
-                <Button
-                  variant="outline"
-                  className="flex px-5 hover:bg-customcolor hover:text-white py-2 items-center rounded-full border"
-                >
-                  C Shop
-                  <FaShopify className="ml-1 text-2xl" />
-                </Button>
+                <Link href={"/create-shop"}>
+                  <Button
+                    variant="outline"
+                    className="flex px-5 hover:bg-customcolor hover:text-white py-2 items-center rounded-full border"
+                  >
+                    C Shop
+                    <FaShopify className="ml-1 text-2xl" />
+                  </Button>
+                </Link>
 
                 {/* Profile Dropdown */}
                 <DropdownMenu>
