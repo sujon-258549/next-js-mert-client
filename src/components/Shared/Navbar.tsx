@@ -64,7 +64,7 @@ const Navbar = () => {
                     <AvatarFallback>Profile Image</AvatarFallback>
                   </Avatar>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="mt-5">
+                <DropdownMenuContent className="mt-5 bg-customcolor">
                   <DropdownMenuLabel>My Account</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>Dashboard</DropdownMenuItem>
@@ -73,7 +73,9 @@ const Navbar = () => {
                   <DropdownMenuItem>My Order</DropdownMenuItem>
 
                   <DropdownMenuSeparator />
-                  <Button className="w-full bg-red-600">Log out</Button>
+                  <Button className="w-full flex bg-red-600">
+                    Log out <TbLogin2 className="ml-1  text-2xl" />
+                  </Button>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
