@@ -3,6 +3,7 @@
 "use client";
 import ReCAPTCHA from "react-google-recaptcha";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import LoaderButton from "@/components/utils/Loader/LoaderButton";
 import {
   Form,
   FormControl,
@@ -31,6 +32,9 @@ const Login = () => {
   const from = useForm({
     resolver: zodResolver(loginSchema),
   });
+  const {
+    formState: { isSubmitting },
+  } = from;
   const email = from.watch("email");
   const password = from.watch("password");
   const isDisabled = !email || !password || !recaptaStatus;
@@ -141,13 +145,23 @@ const Login = () => {
                 />
                 <p>{shotPassword ? "Hide Password" : "Show Password"}</p>
               </div>
-              <Button
-                disabled={isDisabled}
-                className="w-full my-5"
-                type="submit"
-              >
-                Submit
-              </Button>
+              {isSubmitting ? (
+                <Button
+                  disabled={isDisabled}
+                  className="w-full my-5"
+                  type="submit"
+                >
+                  <LoaderButton />
+                </Button>
+              ) : (
+                <Button
+                  disabled={isDisabled}
+                  className="w-full my-5"
+                  type="submit"
+                >
+                  Submit
+                </Button>
+              )}
             </form>
           </Form>
           <div className="flex gap-2 text-sm md:text-[16px] justify-center">

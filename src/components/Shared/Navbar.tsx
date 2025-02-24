@@ -18,8 +18,9 @@ import { LogIn, LogOut } from "lucide-react";
 import { logout } from "@/server/AuthServer";
 
 const Navbar = () => {
-  const { user, setIsLoading, isLoading } = useUser();
-  console.log(isLoading);
+  const { user, setIsLoading } = useUser();
+  const shop = user?.hasShop;
+  console.log(shop);
   const handelLogOut = () => {
     logout();
     setIsLoading(true);
@@ -29,9 +30,9 @@ const Navbar = () => {
       <div className="container">
         <section className="flex py-2 justify-center items-center lg:justify-between flex-wrap">
           {/* Logo Section */}
-          <div>
+          <Link href={"/"}>
             <Logo />
-          </div>
+          </Link>
 
           {/* Search Bar */}
           <div>
@@ -54,16 +55,17 @@ const Navbar = () => {
             {user ? (
               <>
                 {/* Shop Button */}
-                <Link href={"/create-shop"}>
-                  <Button
-                    variant="outline"
-                    className="flex px-5 hover:bg-customcolor hover:text-white py-2 items-center rounded-full border"
-                  >
-                    C Shop
-                    <FaShopify className="ml-1 text-2xl" />
-                  </Button>
-                </Link>
-
+                {!shop && (
+                  <Link href={"/create-shop"}>
+                    <Button
+                      variant="outline"
+                      className="flex p2-5 bg-customcolor text-white py-2 items-center rounded-full border"
+                    >
+                      Create Shop
+                      <FaShopify className="ml-1 text-2xl" />
+                    </Button>
+                  </Link>
+                )}
                 {/* Profile Dropdown */}
                 <DropdownMenu>
                   <DropdownMenuTrigger>
@@ -72,7 +74,7 @@ const Navbar = () => {
                       <AvatarFallback>Profile Image</AvatarFallback>
                     </Avatar>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent className="mt-5 bg-customcolor w-[200px]">
+                  <DropdownMenuContent className="mt-5 bg-customcolor text-white w-[200px]">
                     <DropdownMenuLabel>My Account</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem>Dashboard</DropdownMenuItem>
@@ -91,10 +93,7 @@ const Navbar = () => {
             ) : (
               /* User Not Authenticated */
               <Link href="/login">
-                <Button
-                  variant="outline"
-                  className="hover:bg-customcolor hover:text-white flex px-5 py-2 items-center rounded-full"
-                >
+                <Button className="">
                   <LogIn /> <span>Sign In </span>
                 </Button>
               </Link>

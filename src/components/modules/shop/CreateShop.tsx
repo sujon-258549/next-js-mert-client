@@ -15,19 +15,25 @@ import SingleLogo from "@/components/utils/SingleLogo";
 import { Textarea } from "@/components/ui/textarea";
 import IndexImageUpload from "@/components/ui/core/ImageUploder";
 import { useState } from "react";
-import Image from "next/image";
 import ImagePreviewer from "@/components/ui/core/ImageUploder/ImagePreviewer";
 import { toast } from "sonner";
+import { createStore } from "@/server/Shop";
 // import { zodResolver } from "@hookform/resolvers/zod";
-// import { toast } from "sonner";
+
+import LoaderButton from "@/components/utils/Loader/LoaderButton";
+// import { shopSchema } from "./createShop";
 
 const CreateShop = () => {
   const [image, setImage] = useState<File[] | []>([]);
   const [imagePrevue, setImagePrevue] = useState<string[] | []>([]);
   const form = useForm();
   //     {
-  //     resolver: zodResolver(shopRegistrationSchema),
+  //     // resolver: zodResolver(shopSchema),
+  //     resolver: zodResolver(shopSchema),
   //   }
+  const {
+    formState: { isSubmitting },
+  } = form;
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     console.log(data);
@@ -42,11 +48,12 @@ const CreateShop = () => {
     };
     console.log(modifiedData);
     const toastId = toast.loading("Registering shop...", { duration: 2000 });
-    const formData = new FormData();
-    formData.append("data", JSON.stringify(modifiedData));
-    formData.append("logo", image[0] as File);
+
     try {
-      //   const result = await registerShop(data);
+      const formData = new FormData();
+      formData.append("data", JSON.stringify(modifiedData));
+      formData.append("logo", image[0] as File);
+      const result = await createStore(formData);
       if (result?.success) {
         toast.success(result?.message, { id: toastId, duration: 2000 });
         // Redirect or perform other actions on success
@@ -300,10 +307,16 @@ const CreateShop = () => {
                     />
                   )}
                 </div>
-              </div>
-              <Button type="submit" className="w-full mt-4">
-                Register Shop
-              </Button>
+              </div>{" "}
+              {isSubmitting ? (
+                <Button className="w-full mt-4">
+                  <LoaderButton />
+                </Button>
+              ) : (
+                <Button type="submit" className="w-full mt-4">
+                  Register Shop
+                </Button>
+              )}
             </form>
           </Form>
         </div>
