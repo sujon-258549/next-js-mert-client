@@ -29,6 +29,7 @@ const Login = () => {
   const [shotPassword, setShowPassword] = useState<boolean>();
   //   recapta
   const [recaptaStatus, setRecaptaStatus] = useState(false);
+  console.log(recaptaStatus);
   const from = useForm({
     resolver: zodResolver(loginSchema),
   });
