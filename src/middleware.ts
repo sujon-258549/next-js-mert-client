@@ -5,6 +5,10 @@ import { getCurrentUser } from "./server/AuthServer";
 // auth
 const authRouter = ["/login", "/register"];
 // role base routing
+const roleBaneAccess = {
+  user: [/^\user/],
+  admin: [/^\admin/],
+};
 // This function can be marked `async` if using `await` inside
 export const middleware = async (request: NextRequest) => {
   const { pathname } = request.nextUrl;
