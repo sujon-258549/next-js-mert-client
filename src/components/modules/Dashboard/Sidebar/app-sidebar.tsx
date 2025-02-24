@@ -18,11 +18,13 @@ import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
+  SidebarMenuButton,
   SidebarRail,
 } from "@/components/ui/sidebar";
 import { NavMain } from "./nav-main";
 import { NavUser } from "./nav-user";
 import SingleLogo from "@/components/utils/SingleLogo";
+import Link from "next/link";
 
 // This is sample data.
 const data = {
@@ -107,7 +109,7 @@ const data = {
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
-      <div className="ml-3 mt-3 items-center flex gap-2">
+      {/* <div className="ml-3 mt-3 items-center flex gap-2">
         <SingleLogo />{" "}
         <span
           style={{ fontFamily: "kaftus" }}
@@ -115,7 +117,22 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         >
           Shop
         </span>
-      </div>
+      </div> */}
+      <SidebarMenuButton className="pl-4 pt-10 pb-5" size="lg" asChild>
+        <Link href="/">
+          <div className="flex items-center justify-center">
+            <SingleLogo />{" "}
+          </div>
+          <div className="grid flex-1 text-left text-sm leading-tight">
+            <h2
+              className="font-bold text-2xl "
+              style={{ fontFamily: "kaftus" }}
+            >
+              Shop
+            </h2>
+          </div>
+        </Link>
+      </SidebarMenuButton>
       <SidebarContent>
         <NavMain items={data.navMain} />
       </SidebarContent>
