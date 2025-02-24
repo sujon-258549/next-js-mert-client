@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import {
-  BookOpen,
+  BotIcon,
   Frame,
   Map,
   PieChart,
@@ -41,25 +41,21 @@ const data = {
       icon: SquareTerminal,
     },
     {
-      title: "Documentation",
+      title: "Shop",
       url: "#",
-      icon: BookOpen,
+      icon: BotIcon,
       items: [
         {
-          title: "Introduction",
-          url: "#",
+          title: "Manage Products",
+          url: "/user/shop/all-products",
         },
         {
-          title: "Get Started",
-          url: "#",
+          title: "Manage Categories",
+          url: "/user/shop/category",
         },
         {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
+          title: "Manage Brands",
+          url: "/user/shop/manage-brands",
         },
       ],
     },
@@ -69,19 +65,11 @@ const data = {
       icon: Settings2,
       items: [
         {
-          title: "General",
+          title: "Profile",
           url: "#",
         },
         {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
+          title: "Password Change",
           url: "#",
         },
       ],
