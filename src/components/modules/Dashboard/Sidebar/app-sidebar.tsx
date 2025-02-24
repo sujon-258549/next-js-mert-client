@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/sidebar";
 import { NavMain } from "./nav-main";
 import { NavUser } from "./nav-user";
+import SingleLogo from "@/components/utils/SingleLogo";
 
 // This is sample data.
 const data = {
@@ -33,43 +34,12 @@ const data = {
     email: "m@example.com",
     avatar: "/avatars/shadcn.jpg",
   },
-  teams: [
-    {
-      name: "Acme Inc",
-      logo: GalleryVerticalEnd,
-      plan: "Enterprise",
-    },
-    {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
-    },
-  ],
+
   navMain: [
     {
-      title: "Playground",
-      url: "#",
+      title: "Dashboard",
+      url: "/user/dashboard",
       icon: SquareTerminal,
-      isActive: false,
-      items: [
-        {
-          title: "History",
-          url: "#",
-        },
-        {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
-        },
-      ],
     },
     {
       title: "Documentation",
@@ -140,7 +110,15 @@ const data = {
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
-      <div>hellow</div>
+      <div className="ml-3 mt-3 items-center flex gap-2">
+        <SingleLogo />{" "}
+        <span
+          style={{ fontFamily: "kaftus" }}
+          className="text-3xl font-extrabold"
+        >
+          Shop
+        </span>
+      </div>
       <SidebarContent>
         <NavMain items={data.navMain} />
       </SidebarContent>
