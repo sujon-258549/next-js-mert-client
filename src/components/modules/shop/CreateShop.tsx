@@ -18,10 +18,10 @@ import { useState } from "react";
 import ImagePreviewer from "@/components/ui/core/ImageUploder/ImagePreviewer";
 import { toast } from "sonner";
 import { createStore } from "@/server/Shop";
-// import { zodResolver } from "@hookform/resolvers/zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import LoaderButton from "@/components/utils/Loader/LoaderButton";
-// import { shopSchema } from "./createShop";
+import { shopSchema } from "./createShop.ts";
 
 const CreateShop = () => {
   const [image, setImage] = useState<File[] | []>([]);

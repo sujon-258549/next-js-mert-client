@@ -20,24 +20,28 @@ import Link from "next/link";
 import SingleLogo from "../../../utils/SingleLogo";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { loginSchema } from "./login.ts";
 import { loginUser, verifyRecapta } from "../../../../server/AuthServer/index";
 import { useUser } from "../../../../Context/UserContext.tsx";
 const Login = () => {
   const { setIsLoading } = useUser();
-  const router = useRouter();
   const [shotPassword, setShowPassword] = useState<boolean>();
+  //   recapta
   const [recaptaStatus, setRecaptaStatus] = useState(false);
   const from = useForm({
     resolver: zodResolver(loginSchema),
   });
+  //   redirect work
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirectPath");
+  const router = useRouter();
   const {
     formState: { isSubmitting },
   } = from;
   const email = from.watch("email");
   const password = from.watch("password");
-  const isDisabled = !email || !password || !recaptaStatus;
+  const isDisabled = !email || !password; //|| !recaptaStatus
   const handelRecapta = async (value: string | null) => {
     try {
       const res = await verifyRecapta(value!);
@@ -61,7 +65,11 @@ const Login = () => {
       if (result?.success) {
         toast.success(result?.message, { id: toastId, duration: 2000 });
         setIsLoading(true);
-        router.push("/");
+        if (redirect) {
+          router.push(redirect);
+        } else {
+          router.push("/profile");
+        }
         // window.location.reload();
       } else {
         toast.error(result?.message, { id: toastId, duration: 2000 });

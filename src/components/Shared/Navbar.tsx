@@ -16,13 +16,20 @@ import Link from "next/link";
 import { useUser } from "@/Context/UserContext";
 import { LogIn, LogOut } from "lucide-react";
 import { logout } from "@/server/AuthServer";
+import { usePathname, useRouter } from "next/navigation";
+import { protectRoute } from "@/constect";
 
 const Navbar = () => {
   const { user, setIsLoading } = useUser();
+  const router = useRouter();
+  const pathName = usePathname();
   const shop = user?.hasShop;
   console.log(shop);
   const handelLogOut = () => {
     logout();
+    if (protectRoute.some((route) => pathName.match(route))) {
+      router.push("/login");
+    }
     setIsLoading(true);
   };
   return (
