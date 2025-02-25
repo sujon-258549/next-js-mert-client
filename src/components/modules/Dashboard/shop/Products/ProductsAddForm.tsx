@@ -53,7 +53,11 @@ const ProductsAddForm = () => {
     name: "availableColors",
   });
 
-  cosnt;
+  const addAppendColor = () => {
+    appendColor({
+      value: "",
+    });
+  };
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     console.log(data);
@@ -273,28 +277,32 @@ const ProductsAddForm = () => {
                 <h2 className="text-xl text-customcolor md:text-2xl font-bold">
                   Available Colors
                 </h2>
-                <Button variant={"outline"}>
+                <Button onClick={addAppendColor} variant={"outline"}>
                   <FaPlus />
                 </Button>
               </div>
               <Separator />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <FormField
-                  control={form.control}
-                  name="availableColors"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          value={field.value || ""}
-                          placeholder="Enter Available Colors"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                {fieldColor.map((files, index) => (
+                  <FormField
+                    key={files.id} // Make sure `files.id` is unique
+                    control={form.control}
+                    name={`availableColors.${index}.value`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Color {index + 1}</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            value={field.value || ""}
+                            placeholder="Enter Available Colors"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                ))}
               </div>
               {/* kye future */}
               <Separator />
