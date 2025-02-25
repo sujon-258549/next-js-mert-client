@@ -1,10 +1,12 @@
-import ManageBrand from "@/components/modules/Dashboard/shop/ManageBrand";
+import ManageBrand from "@/components/modules/Dashboard/shop/Brand/ManageBrand";
+import { getAllBrand } from "@/server/Brand";
 import React from "react";
 
-const managePage = () => {
+const managePage = async () => {
+  const { data, meta } = await getAllBrand();
   return (
     <div>
-      <ManageBrand />
+      <ManageBrand data={data} meta={meta} />
     </div>
   );
 };

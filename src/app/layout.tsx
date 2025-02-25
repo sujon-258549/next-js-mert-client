@@ -3,6 +3,7 @@ import { Urbanist } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
 import Provider from "@/providers/Providers";
+import "sweetalert2/src/sweetalert2.scss";
 // Import the font and apply the class
 const urbanistFont = Urbanist({
   subsets: ["latin"],

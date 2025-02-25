@@ -3,7 +3,7 @@
 "use client";
 import ReCAPTCHA from "react-google-recaptcha";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import LoaderButton from "@/components/utils/Loader/LoaderButton";
+import LoaderButton from "../../../../components/utils/Loader/LoaderButton.tsx";
 import {
   Form,
   FormControl,
@@ -24,6 +24,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { loginSchema } from "./login.ts";
 import { loginUser, verifyRecapta } from "../../../../server/AuthServer/index";
 import { useUser } from "../../../../Context/UserContext.tsx";
+import React from "react";
 const Login = () => {
   const { setIsLoading } = useUser();
   const [shotPassword, setShowPassword] = useState<boolean>();
@@ -42,7 +43,7 @@ const Login = () => {
   } = from;
   const email = from.watch("email");
   const password = from.watch("password");
-  const isDisabled = !email || !password; //|| !recaptaStatus
+  const isDisabled = !email || !password || !recaptaStatus;
   const handelRecapta = async (value: string | null) => {
     try {
       const res = await verifyRecapta(value!);

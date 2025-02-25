@@ -1,9 +1,11 @@
-import CreateCategory from "@/components/modules/Dashboard/shop/CreateCategory";
+import CreateCategory from "@/components/modules/Dashboard/shop/Category/CreateCategory";
+import { getAllCategory } from "@/server/Category";
 
-const CategoryPage = () => {
+const CategoryPage = async () => {
+  const { data, meta } = await getAllCategory();
   return (
     <div className="mx-5">
-      <CreateCategory />
+      <CreateCategory data={data} meta={meta} />
     </div>
   );
 };

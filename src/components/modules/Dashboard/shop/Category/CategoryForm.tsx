@@ -22,8 +22,7 @@ import IndexImageUpload from "@/components/ui/core/ImageUploader";
 import { useState } from "react";
 import { createCategory } from "@/server/Category";
 import { toast } from "sonner";
-
-const CreateCategory = () => {
+const CategoryForm = () => {
   const [image, setImage] = useState<File[] | []>([]);
   const [imagePrevue, setImagePrevue] = useState<string[] | []>([]);
   const form = useForm();
@@ -51,12 +50,9 @@ const CreateCategory = () => {
       });
     }
   };
-
   return (
-    <div className="flex justify-between">
-      <div>
-        <h1 className="text-2xl  font-bold">Manage Category</h1>
-      </div>
+    <div>
+      {" "}
       <Dialog>
         <DialogTrigger asChild>
           <Button>Create Category</Button>
@@ -145,4 +141,4 @@ const CreateCategory = () => {
   );
 };
 
-export default CreateCategory;
+export default CategoryForm;

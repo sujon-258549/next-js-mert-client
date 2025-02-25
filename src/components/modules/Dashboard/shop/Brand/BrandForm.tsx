@@ -22,7 +22,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { createBrand } from "@/server/Brand";
 
-const ManageBrand = () => {
+const BrandForm = () => {
   const [image, setImage] = useState<File[] | []>([]);
   const [imagePrevue, setImagePrevue] = useState<string[] | []>([]);
   const form = useForm();
@@ -50,12 +50,9 @@ const ManageBrand = () => {
       });
     }
   };
-
   return (
-    <div className="flex justify-between">
-      <div>
-        <h1 className="text-2xl  font-bold">Manage Brands</h1>
-      </div>
+    <div>
+      {" "}
       <Dialog>
         <DialogTrigger asChild>
           <Button>Create Brands</Button>
@@ -79,11 +76,7 @@ const ManageBrand = () => {
                         <FormItem>
                           <FormLabel>Brand Name</FormLabel>
                           <FormControl>
-                            <Textarea
-                              className="h-10"
-                              {...field}
-                              value={field.value || ""}
-                            />
+                            <Textarea {...field} value={field.value || ""} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -126,4 +119,4 @@ const ManageBrand = () => {
   );
 };
 
-export default ManageBrand;
+export default BrandForm;
