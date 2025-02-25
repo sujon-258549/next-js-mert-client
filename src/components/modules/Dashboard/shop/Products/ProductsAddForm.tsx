@@ -52,9 +52,29 @@ const ProductsAddForm = () => {
     control: form.control,
     name: "availableColors",
   });
+  const { append: appendKyeFuture, fields: fieldKyeFuture } = useFieldArray({
+    control: form.control,
+    name: "keyFeatures",
+  });
+  const { append: appendspecification, fields: fieldspecification } =
+    useFieldArray({
+      control: form.control,
+      name: "specification",
+    });
 
   const addAppendColor = () => {
     appendColor({
+      value: "",
+    });
+  };
+  const addAppendKyeFuture = () => {
+    appendKyeFuture({
+      value: "",
+    });
+  };
+  const addAppendspecification = () => {
+    appendspecification({
+      key: "",
       value: "",
     });
   };
@@ -165,7 +185,7 @@ const ProductsAddForm = () => {
                 />
                 <FormField
                   control={form.control}
-                  name="product.brand"
+                  name="brand"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Brand</FormLabel>
@@ -310,62 +330,91 @@ const ProductsAddForm = () => {
                 <h2 className="text-xl text-customcolor md:text-2xl font-bold">
                   Key Features
                 </h2>
-                <Button variant={"outline"}>
+                <Button onClick={addAppendKyeFuture} variant={"outline"}>
                   <FaPlus />
                 </Button>
               </div>
               <Separator />
-              <FormField
-                control={form.control}
-                name="keyFeatures"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        value={field.value || ""}
-                        placeholder="Enter Available kye future"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              {fieldKyeFuture.map((files, index) => (
+                <FormField
+                  key={files.id} // Make sure `files.id` is unique
+                  control={form.control}
+                  name={`keyFeatures.${index}.value`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>keyFeatures {index + 1}</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          value={field.value || ""}
+                          placeholder="Enter keyFeatures"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              ))}
               {/* kye future */}
               <Separator />
               <div className="flex justify-between">
                 <h2 className="text-xl text-customcolor md:text-2xl font-bold">
                   Specification
                 </h2>
-                <Button variant={"outline"}>
+                <Button onClick={addAppendspecification} variant={"outline"}>
                   <FaPlus />
                 </Button>
               </div>
               <Separator />
-              <FormField
-                control={form.control}
-                name="specification"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        value={field.value || ""}
-                        placeholder="Enter specification"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
+              {fieldspecification.map((specificationField, index) => (
+                <div key={specificationField.id}>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <FormField
+                      control={form.control}
+                      name={`specification.${index}.key`}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Future Name {index + 1}</FormLabel>
+                          <FormControl>
+                            <Input
+                              {...field}
+                              value={field.value || ""}
+                              type="text"
+                              placeholder="Enter Future name"
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name={`specification.${index}.value`}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Future Description {index + 1}</FormLabel>
+                          <FormControl>
+                            <Input
+                              {...field}
+                              value={field.value || ""}
+                              type="text"
+                              placeholder="Enter Future description"
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                </div>
+              ))}
               {isSubmitting ? (
                 <Button className="w-full mt-4">
                   <LoaderButton />
                 </Button>
               ) : (
                 <Button type="submit" className="w-full mt-4">
-                  Register Shop
+                  Add Product
                 </Button>
               )}
             </form>
