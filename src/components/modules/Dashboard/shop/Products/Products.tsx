@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import { Category, TCategoryData } from "@/types";
+import { TCategoryData } from "@/types";
 import { TableComponent } from "@/components/utils/table/Table";
 import { ColumnDef } from "@tanstack/react-table";
 import { MdDelete } from "react-icons/md";
@@ -9,20 +9,11 @@ import Swal from "sweetalert2";
 import { toast } from "sonner";
 import { FaExternalLinkAlt, FaRegEdit } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import {} from "@/components/ui/dialog";
 import Link from "next/link";
 import { IoMdAdd } from "react-icons/io";
 const Products = ({ data, meta }: TCategoryData) => {
-  console.log(meta);
-  const [storeData, setStoreData] = useState<Category | null>(null); // Define the correct type for storeData
-  const [dialogOpen, setDialogOpen] = useState(false); // For controlling dialog open/close
+  console.log(meta, data);
 
   const handelDeleteCategory = async (categoryId: string) => {
     try {
@@ -63,6 +54,10 @@ const Products = ({ data, meta }: TCategoryData) => {
       header: "Name",
     },
     {
+      accessorKey: "category.name",
+      header: "Category",
+    },
+    {
       accessorKey: "slug",
       header: "Slug",
     },
@@ -82,21 +77,21 @@ const Products = ({ data, meta }: TCategoryData) => {
       ),
     },
     {
-      accessorKey: "createdBy.name",
-      header: "Created By Name",
+      accessorKey: "stock",
+      header: "Stock",
     },
     {
-      accessorKey: "createdBy.role",
-      header: "Created By Role",
+      accessorKey: "price",
+      header: "Price",
     },
     {
-      accessorKey: "icon",
-      header: "Icon",
+      accessorKey: "imageUrls",
+      header: "Image",
       cell: ({ row }) => (
         <img
           width={50}
           height={50}
-          src={row.original?.icon}
+          src={row.original?.imageUrls[0]}
           alt="Category Icon"
           className="w-10 h-10 object-cover"
         />
@@ -110,21 +105,20 @@ const Products = ({ data, meta }: TCategoryData) => {
           <Button onClick={() => handelDeleteCategory(row.original?._id)}>
             <MdDelete />
           </Button>
+          <Link
+            href={`/user/shop/products/update-product/${row?.original?._id}`}
+          >
+            <Button>
+              <FaRegEdit />
+            </Button>
+          </Link>
           <Button
             onClick={() => {
-              setStoreData(row.original); // Store the current row data
-              setDialogOpen(true); // Open the dialog
+              // @ts-expect-error row
+              setStoreData(row.original); // Store the current row data for editing
             }}
           >
             <FaExternalLinkAlt />
-          </Button>
-          <Button
-            onClick={() => {
-              setStoreData(row.original); // Store the current row data for editing
-              setDialogOpen(true); // Open the dialog for editing
-            }}
-          >
-            <FaRegEdit />
           </Button>
         </span>
       ),
@@ -149,25 +143,6 @@ const Products = ({ data, meta }: TCategoryData) => {
 
       {/* @ts-expect-error data */}
       <TableComponent data={data} columns={columns} />
-
-      {/* Dialog for showing or editing category */}
-      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <img
-              src={storeData?.icon}
-              alt="Category Icon"
-              className="h-20 w-20 object-cover object-cover"
-            />
-            <DialogTitle>{storeData?.name}</DialogTitle>
-            <DialogDescription>
-              <div className="text-sm text-muted-foreground">
-                {storeData?.description}
-              </div>
-            </DialogDescription>
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
     </section>
   );
 };

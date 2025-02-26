@@ -18,9 +18,8 @@ import { Input } from "../../../../ui/input";
 import { Button } from "../../../../ui/button";
 import SingleLogo from "@/components/utils/SingleLogo";
 import { Textarea } from "@/components/ui/textarea";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { createStore } from "@/server/Shop";
 import LoaderButton from "@/components/utils/Loader/LoaderButton";
 import IndexImageUpload from "@/components/ui/core/ImageUploader";
 import ImagePreviewer from "@/components/ui/core/ImageUploader/ImagePreviewer";
@@ -34,7 +33,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { getAllCategory } from "@/server/Category";
+import { getAllBrand } from "@/server/Brand";
+import { Category } from "@/types";
+import { useRouter } from "next/navigation";
+import { createProduct } from "@/server/Product";
 const ProductsAddForm = () => {
+  const [categories, setCategory] = useState<Category[] | []>([]);
+  const [brands, setBrands] = useState<Category[] | []>([]);
   const [image, setImage] = useState<File[] | []>([]);
   const [imagePrevue, setImagePrevue] = useState<string[] | []>([]);
   const form = useForm({
@@ -50,6 +56,7 @@ const ProductsAddForm = () => {
       keyFeatures: [{ value: "" }],
       specification: [{ key: "", value: "" }],
     },
+    // resolver:zodResolver(productSchema)
   });
   const {
     formState: { isSubmitting },
@@ -86,10 +93,21 @@ const ProductsAddForm = () => {
     });
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const [categoryData, brandData] = await Promise.all([
+        getAllCategory(),
+        getAllBrand(),
+      ]);
+      setCategory(categoryData?.data);
+      setBrands(brandData?.data);
+    };
+    fetchData();
+  }, []);
+  const router = useRouter();
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    console.log(data);
     // color create array
-    const colorProperty = data.availableColors.map(
+    const availableColors = data.availableColors.map(
       (color: { value: string }) => color.value
     );
     // keyFeatures create array
@@ -101,27 +119,38 @@ const ProductsAddForm = () => {
     data.specification.forEach((element: { key: string; value: string }) => {
       specification[element.key] = element.key;
     });
-    console.log(colorProperty, keyFeatures, specification);
-    // const toastId = toast.loading("Registering shop...", { duration: 2000 });
-
-    // try {
-    //   const formData = new FormData();
-    //   formData.append("data", JSON.stringify(modifiedData));
-    //   formData.append("logo", image[0] as File);
-    //   const result = await createStore(formData);
-    //   if (result?.success) {
-    //     toast.success(result?.message, { id: toastId, duration: 2000 });
-    //     // Redirect or perform other actions on success
-    //   } else {
-    //     toast.error(result?.message, { id: toastId, duration: 2000 });
-    //   }
-    // } catch (error: any) {
-    //   toast.error("An error occurred while registering the shop.", {
-    //     id: toastId,
-    //     duration: 2000,
-    //   });
-    //   console.error(error);
-    // }
+    const toastId = toast.loading("Crating Product...", { duration: 2000 });
+    const modifiedData = {
+      ...data,
+      specification,
+      keyFeatures,
+      availableColors,
+      price: parseFloat(data.price),
+      stock: Number(data.stock),
+      weight: parseFloat(data.weight),
+    };
+    console.log({ modifiedData, image });
+    try {
+      const formData = new FormData();
+      formData.append("data", JSON.stringify(modifiedData));
+      for (const file of image) {
+        formData.append("images", file);
+      }
+      const result = await createProduct(formData);
+      if (result?.success) {
+        toast.success(result?.message, { id: toastId, duration: 2000 });
+        router.push("/user/shop/products");
+        // Redirect or perform other actions on success
+      } else {
+        toast.error(result?.message, { id: toastId, duration: 2000 });
+      }
+    } catch (error: any) {
+      toast.error("An error occurred while crating product.", {
+        id: toastId,
+        duration: 2000,
+      });
+      console.error(error);
+    }
   };
 
   return (
@@ -203,15 +232,14 @@ const ProductsAddForm = () => {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="m@example.com">
-                            m@example.com
-                          </SelectItem>
-                          <SelectItem value="m@google.com">
-                            m@google.com
-                          </SelectItem>
-                          <SelectItem value="m@support.com">
-                            m@support.com
-                          </SelectItem>
+                          {categories.map((category: Category) => (
+                            <SelectItem
+                              key={category?._id}
+                              value={category._id}
+                            >
+                              {category?.name}
+                            </SelectItem>
+                          ))}
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -234,15 +262,11 @@ const ProductsAddForm = () => {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="m@example.com">
-                            m@example.com
-                          </SelectItem>
-                          <SelectItem value="m@google.com">
-                            m@google.com
-                          </SelectItem>
-                          <SelectItem value="m@support.com">
-                            m@support.com
-                          </SelectItem>
+                          {brands.map((brand: Category) => (
+                            <SelectItem key={brand?._id} value={brand._id}>
+                              {brand?.name}
+                            </SelectItem>
+                          ))}
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -259,6 +283,7 @@ const ProductsAddForm = () => {
                       <FormLabel>Weight</FormLabel>
                       <FormControl>
                         <Input
+                          type="number"
                           {...field}
                           value={field.value || ""}
                           placeholder="Enter Product Weight"
@@ -346,7 +371,11 @@ const ProductsAddForm = () => {
                 <h2 className="text-xl text-customcolor md:text-2xl font-bold">
                   Available Colors
                 </h2>
-                <Button onClick={addAppendColor} variant={"outline"}>
+                <Button
+                  type="button"
+                  onClick={addAppendColor}
+                  variant={"outline"}
+                >
                   <FaPlus />
                 </Button>
               </div>
@@ -379,7 +408,11 @@ const ProductsAddForm = () => {
                 <h2 className="text-xl text-customcolor md:text-2xl font-bold">
                   Key Features
                 </h2>
-                <Button onClick={addAppendKyeFuture} variant={"outline"}>
+                <Button
+                  type="button"
+                  onClick={addAppendKyeFuture}
+                  variant={"outline"}
+                >
                   <FaPlus />
                 </Button>
               </div>
@@ -410,7 +443,11 @@ const ProductsAddForm = () => {
                 <h2 className="text-xl text-customcolor md:text-2xl font-bold">
                   Specification
                 </h2>
-                <Button onClick={addAppendspecification} variant={"outline"}>
+                <Button
+                  type="button"
+                  onClick={addAppendspecification}
+                  variant={"outline"}
+                >
                   <FaPlus />
                 </Button>
               </div>

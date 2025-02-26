@@ -1,8 +1,8 @@
 import Products from "@/components/modules/Dashboard/shop/Products/Products";
-import { getAllCategory } from "@/server/Category";
+import { getAllProduct } from "@/server/Product";
 
 const ProductPage = async () => {
-  const { data, meta } = await getAllCategory();
+  const { data, meta } = await getAllProduct();
   return (
     <div>
       <Products meta={meta} data={data} />
