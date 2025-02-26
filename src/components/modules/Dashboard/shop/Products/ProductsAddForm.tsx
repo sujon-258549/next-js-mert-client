@@ -81,6 +81,20 @@ const ProductsAddForm = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     console.log(data);
+    // color create array
+    const colorProperty = data.availableColors.map(
+      (color: { value: string }) => color.value
+    );
+    // keyFeatures create array
+    const keyFeatures = data.keyFeatures.map(
+      (keyFuture: { value: string }) => keyFuture.value
+    );
+    // kye and value element added for specification
+    const specification: { [key: string]: string } = {};
+    data.specification.forEach((element: { key: string; value: string }) => {
+      specification[element.key] = element.key;
+    });
+    console.log(colorProperty, keyFeatures);
     // const toastId = toast.loading("Registering shop...", { duration: 2000 });
 
     // try {
