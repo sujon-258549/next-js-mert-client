@@ -4,7 +4,6 @@ import { TCategoryData } from "@/types";
 import { TableComponent } from "@/components/utils/table/Table";
 import { ColumnDef } from "@tanstack/react-table";
 import { MdDelete } from "react-icons/md";
-import { deleteCategory } from "@/server/Category";
 import Swal from "sweetalert2";
 import { toast } from "sonner";
 import { FaExternalLinkAlt, FaRegEdit } from "react-icons/fa";
@@ -12,10 +11,11 @@ import { Button } from "@/components/ui/button";
 import {} from "@/components/ui/dialog";
 import Link from "next/link";
 import { IoMdAdd } from "react-icons/io";
+import { deleteProduct } from "@/server/Product";
 const Products = ({ data, meta }: TCategoryData) => {
   console.log(meta, data);
 
-  const handelDeleteCategory = async (categoryId: string) => {
+  const handelDeleteCategory = async (productId: string) => {
     try {
       const result = await Swal.fire({
         title: "Are you sure?",
@@ -28,7 +28,7 @@ const Products = ({ data, meta }: TCategoryData) => {
       });
 
       if (result.isConfirmed) {
-        const deleteResponse = await deleteCategory(categoryId);
+        const deleteResponse = await deleteProduct(productId);
         if (deleteResponse) {
           toast.success(deleteResponse?.message, { duration: 2000 });
           Swal.fire({
