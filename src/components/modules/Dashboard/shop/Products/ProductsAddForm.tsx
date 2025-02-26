@@ -94,7 +94,7 @@ const ProductsAddForm = () => {
     data.specification.forEach((element: { key: string; value: string }) => {
       specification[element.key] = element.key;
     });
-    console.log(colorProperty, keyFeatures);
+    console.log(colorProperty, keyFeatures, specification);
     // const toastId = toast.loading("Registering shop...", { duration: 2000 });
 
     // try {
