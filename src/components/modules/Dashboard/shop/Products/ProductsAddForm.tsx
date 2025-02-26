@@ -27,6 +27,13 @@ import ImagePreviewer from "@/components/ui/core/ImageUploader/ImagePreviewer";
 import { Separator } from "@/components/ui/separator";
 import { FaPlus } from "react-icons/fa";
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 const ProductsAddForm = () => {
   const [image, setImage] = useState<File[] | []>([]);
   const [imagePrevue, setImagePrevue] = useState<string[] | []>([]);
@@ -186,13 +193,27 @@ const ProductsAddForm = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Category</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          value={field.value || ""}
-                          placeholder="Enter Product Category"
-                        />
-                      </FormControl>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select a Category" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="m@example.com">
+                            m@example.com
+                          </SelectItem>
+                          <SelectItem value="m@google.com">
+                            m@google.com
+                          </SelectItem>
+                          <SelectItem value="m@support.com">
+                            m@support.com
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -203,13 +224,27 @@ const ProductsAddForm = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Brand</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          value={field.value || ""}
-                          placeholder="Enter Product Brand"
-                        />
-                      </FormControl>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select a Brand" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="m@example.com">
+                            m@example.com
+                          </SelectItem>
+                          <SelectItem value="m@google.com">
+                            m@google.com
+                          </SelectItem>
+                          <SelectItem value="m@support.com">
+                            m@support.com
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
                       <FormMessage />
                     </FormItem>
                   )}
