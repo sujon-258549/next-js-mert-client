@@ -9,7 +9,12 @@
 
 .subscribe {
   background: url("../../../../assets/Home/man.png");
-  background-size: cover;
-  background-position: top, right;
+  background-size: unset;
+  background-position: right;
   background-repeat: no-repeat;
+}
+@media only screen and (max-width: 1020px) {
+  .subscribe {
+    background: url("");
+  }
 }
