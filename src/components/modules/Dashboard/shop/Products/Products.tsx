@@ -112,14 +112,13 @@ const Products = ({ data, meta }: TCategoryData) => {
               <FaRegEdit />
             </Button>
           </Link>
-          <Button
-            onClick={() => {
-              // @ts-expect-error row
-              setStoreData(row.original); // Store the current row data for editing
-            }}
+          <Link
+            href={`/user/shop/products/details-product/${row?.original?._id}`}
           >
-            <FaExternalLinkAlt />
-          </Button>
+            <Button>
+              <FaExternalLinkAlt />
+            </Button>
+          </Link>
         </span>
       ),
     },

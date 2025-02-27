@@ -1,0 +1,55 @@
+export type TProduct = {
+  _id: string;
+  name: string;
+  description: string;
+  price: number;
+  offerPrice: number | null;
+  stock: number;
+  weight: number;
+  ratingCount: number;
+  averageRating: number;
+  reviews: string[];
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+  availableColors: string[];
+  keyFeatures: string[];
+  imageUrls: string[];
+  slug: string;
+  specification: Record<string, string>;
+  brand: {
+    _id: string;
+    name: string;
+    logo: string;
+    isActive: boolean;
+    createdAt: string;
+    updatedAt: string;
+  };
+  category: {
+    _id: string;
+    name: string;
+    description: string;
+    icon: string;
+    slug: string;
+    parent: string | null;
+    isActive: boolean;
+    createdAt: string;
+    updatedAt: string;
+  };
+  shop: {
+    _id: string;
+    shopName: string;
+    address: string;
+    contactNumber: string;
+    businessLicenseNumber: string;
+    taxIdentificationNumber: string;
+    establishedYear: number;
+    logo: string;
+    website: string;
+    ratings: number;
+    servicesOffered: string[];
+    isActive: boolean;
+    createdAt: string;
+    updatedAt: string;
+  };
+};
