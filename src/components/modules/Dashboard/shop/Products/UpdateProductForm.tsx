@@ -495,6 +495,7 @@ const UpdateProductForm = ({ productdata }: any) => {
                           <FormControl>
                             <Input
                               {...field}
+                              // @ts-expect-error value
                               value={field.value || ""}
                               type="text"
                               placeholder="Enter Future description"

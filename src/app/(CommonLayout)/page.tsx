@@ -1,4 +1,4 @@
-import Banner from "../../components/modules/Home/Banner";
+import Banner from "../../components/modules/Home/Banner/Banner";
 
 const CommonPage = () => {
   return (
