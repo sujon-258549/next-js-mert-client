@@ -43,11 +43,11 @@ const BrandForm = () => {
         toast.error(result?.message, { id: toastId, duration: 2000 });
       }
     } catch (error: any) {
-      console.log();
-      toast.error(error.slice(0, 20), {
-        id: toastId,
-        duration: 2000,
-      });
+      console.log(error);
+      //   toast.error(error.slice(0, 20), {
+      //     id: toastId,
+      //     duration: 2000,
+      //   });
     }
   };
   return (

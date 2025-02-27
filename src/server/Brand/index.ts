@@ -4,6 +4,7 @@ import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
 export const createBrand = async (data: FormData) => {
+  console.log(data);
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/brand`, {
       method: "POST",
@@ -41,9 +42,6 @@ export const deleteBrand = async (brandId: string): Promise<any> => {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/brand/${brandId}`,
       {
-        next: {
-          tags: ["brandId"],
-        },
         method: "DELETE",
         headers: {
           Authorization: (await cookies()).get("accessToken")!.value,

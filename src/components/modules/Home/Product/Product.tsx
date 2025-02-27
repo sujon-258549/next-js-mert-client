@@ -14,11 +14,10 @@ const Product = () => {
     };
     fetchdata();
   }, []);
-  console.log(products);
   return (
-    <div className="pb-10">
-      <div className="grid gap-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
-        {products.slice(0, 4).map((product: TProduct) => (
+    <div className="">
+      <div className="grid gap-10 lg:gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+        {products?.slice(0, 4)?.map((product: TProduct) => (
           <div
             key={product._id}
             style={{
@@ -26,10 +25,10 @@ const Product = () => {
               background:
                 "linear-gradient(to bottom, white, white 80%, #8dbac1 100%, #0498AF 100%)",
             }}
-            className="group flex w-full max-w-xs flex-col self-center overflow-hidden rounded-lg"
+            className="group border-2 border-white flex w-full max-w-sm mx-auto md:max-w-full flex-col self-center overflow-hidden rounded-lg"
           >
             <a
-              className="relative mx-3 mt-2 flex h-44 overflow-hidden rounded-xl"
+              className="relative mx-3 mt-2 flex h-60 lg:h-44 overflow-hidden rounded-xl"
               href="#"
             >
               <img

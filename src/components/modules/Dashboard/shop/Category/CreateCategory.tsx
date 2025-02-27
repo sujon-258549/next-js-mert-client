@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/dialog";
 
 const CreateCategory = ({ data, meta }: TCategoryData) => {
+  console.log(meta);
   const [storeData, setStoreData] = useState<Category | null>(null); // Define the correct type for storeData
   const [dialogOpen, setDialogOpen] = useState(false); // For controlling dialog open/close
 
@@ -111,6 +112,7 @@ const CreateCategory = ({ data, meta }: TCategoryData) => {
           </Button>
           <Button
             onClick={() => {
+              // @ts-expect-error original
               setStoreData(row.original); // Store the current row data
               setDialogOpen(true); // Open the dialog
             }}
@@ -119,6 +121,7 @@ const CreateCategory = ({ data, meta }: TCategoryData) => {
           </Button>
           <Button
             onClick={() => {
+              // @ts-expect-error original
               setStoreData(row.original); // Store the current row data for editing
               setDialogOpen(true); // Open the dialog for editing
             }}
@@ -152,11 +155,7 @@ const CreateCategory = ({ data, meta }: TCategoryData) => {
               className="h-20 w-20 object-cover object-cover"
             />
             <DialogTitle>{storeData?.name}</DialogTitle>
-            <DialogDescription>
-              <div className="text-sm text-muted-foreground">
-                {storeData?.description}
-              </div>
-            </DialogDescription>
+            <DialogDescription>{storeData?.description}</DialogDescription>
           </DialogHeader>
         </DialogContent>
       </Dialog>

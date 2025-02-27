@@ -153,9 +153,7 @@ const ManageBrand = ({ data, meta }: TCategoryData) => {
               className="h-20 w-20 object-cover object-cover"
             />
             <DialogTitle>{storeData?.name}</DialogTitle>
-            <DialogDescription>
-              <div className="text-sm text-muted-foreground"></div>
-            </DialogDescription>
+            <DialogDescription></DialogDescription>
           </DialogHeader>
         </DialogContent>
       </Dialog>

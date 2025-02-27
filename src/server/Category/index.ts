@@ -4,6 +4,7 @@ import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
 export const createCategory = async (data: FormData) => {
+  console.log(data);
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/category`, {
       method: "POST",
@@ -41,9 +42,6 @@ export const deleteCategory = async (categoryId: string): Promise<any> => {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/category/${categoryId}`,
       {
-        next: {
-          tags: ["CATEGORY"],
-        },
         method: "DELETE",
         headers: {
           Authorization: (await cookies()).get("accessToken")!.value,
