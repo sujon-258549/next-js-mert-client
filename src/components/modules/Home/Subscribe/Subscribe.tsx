@@ -6,7 +6,8 @@ const Subscribe = () => {
     <div>
       <section className="my-10">
         <div className={`${styles.banner}`}>
-          <div className={`${styles.subscribe}`}>
+          <div className="bg-[url('/man.png')] bg-cover bg-top-left bg-no-repeat ">
+            {/* <div className={`${styles.subscribe}`}> */}
             <div className="rounded-md lg:h-[516px] md:px-10 px-8 mx-auto py-10 lg:py-0 flex flex-col lg:flex-row-reverse  gap-5 items-center">
               {/* Right Image (Appears First on Mobile) */}
               <div className="w-full lg:w-[30%] relative  lg:-mt-5 h-[400px] md:h-[500px]"></div>
