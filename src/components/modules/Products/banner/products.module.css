@@ -1,0 +1,8 @@
+.productBanner {
+  background: url("../../../../assets/product/product-banner.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 10px;
+  border: 2px solid white;
+}

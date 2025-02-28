@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 const TopBrands = async () => {
-  const { data: categories } = await getAllBrand();
+  const { data: brands } = await getAllBrand();
   return (
     <div className="pb-16 pt-10 md:pt-20 md:pb-32">
       {/* header section category */}
@@ -20,24 +20,22 @@ const TopBrands = async () => {
       </div>
       {/* category data */}
       <div className="grid grid-cols-2 pt-5 md:pt-10 md:grid-cols-2 lg:grid-cols-4 gap-5">
-        {Array(8)
-          ?.fill(categories[0])
-          ?.map((category: Category, index: number) => (
-            <div
-              //   style={{ boxShadow: "1px 1px 8px" }}
-              className="bg-[#ffffff8c] border-[10px] border-[#ffffff] rounded-md py-4"
-              key={index}
-            >
-              <Image
-                // @ts-expect-error src
-                src={category?.logo}
-                alt={category?.name}
-                width={100}
-                height={100}
-                className="mx-auto"
-              />
-            </div>
-          ))}
+        {brands?.slice(0, 8)?.map((category: Category, index: number) => (
+          <div
+            //   style={{ boxShadow: "1px 1px 8px" }}
+            className="bg-[#ffffff8c] flex justify-center items-center border-[10px] border-[#ffffff] rounded-md py-4"
+            key={index}
+          >
+            <Image
+              // @ts-expect-error src
+              src={category?.logo}
+              alt={category?.name}
+              width={100}
+              height={100}
+              className="mx-auto"
+            />
+          </div>
+        ))}
       </div>
     </div>
   );

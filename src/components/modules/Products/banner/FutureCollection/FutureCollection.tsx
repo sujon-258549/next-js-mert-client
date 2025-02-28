@@ -4,19 +4,27 @@ import { Category } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 
-const HomeCategory = async () => {
+const FutureCollection = async () => {
   const { data: categories } = await getAllCategory();
   return (
-    <div className="py-16 md:py-32">
+    <div className="py-16">
       {/* header section category */}
       <div className="flex justify-between rounded-full">
-        <h2 className="text-2xl md:text-3xl font-bold">Category</h2>
-        <Link href={"/products"}>
-          {" "}
-          <Button variant={"outline"} className="rounded-full">
-            View All
-          </Button>
-        </Link>
+        <h2 className="text-2xl md:text-3xl font-bold">Featured Collection</h2>
+        <div className="flex gap-2">
+          <Link href={"/products"}>
+            {" "}
+            <Button variant={"outline"} className="rounded-full ">
+              Previous
+            </Button>
+          </Link>
+          <Link href={"/products"}>
+            {" "}
+            <Button variant={"outline"} className="rounded-full font-semibold">
+              Next
+            </Button>
+          </Link>
+        </div>
       </div>
       {/* category data */}
       <div className="grid grid-cols-2 pt-5 md:pt-10 md:grid-cols-4 lg:grid-cols-6 gap-5">
@@ -44,4 +52,4 @@ const HomeCategory = async () => {
   );
 };
 
-export default HomeCategory;
+export default FutureCollection;

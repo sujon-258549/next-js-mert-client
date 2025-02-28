@@ -1,26 +1,16 @@
 import { Button } from "@/components/ui/button";
-import { getAllProduct } from "@/server/Product";
-import { TProduct } from "@/types";
+import { Separator } from "@/components/ui/separator";
+import { Category, TProduct } from "@/types";
 import Link from "next/link";
-import {
-  FaCartArrowDown,
-  FaHeart,
-  FaShoppingCart,
-  FaStar,
-} from "react-icons/fa";
-import Comedown from "./Comedowns";
+import { FaCartArrowDown, FaHeart, FaStar } from "react-icons/fa";
 
-const FlashSale = async () => {
-  const { data: products } = await getAllProduct();
+const Products = async ({ data }: { data: TProduct[] }) => {
   return (
-    <section className="py-16 md:py-32">
-      <div className="">
+    <section className="">
+      <div className=" container">
         {/* header section category */}
-        <div className="flex justify-between rounded-full mb-10">
-          <h2 className="text-2xl md:text-3xl font-bold">Flash Deals</h2>
-          <div className="md:block hidden mt-1">
-            <Comedown />
-          </div>
+        <div className="flex justify-between rounded-full mb-5">
+          <h2 className="text-2xl md:text-3xl font-bold">Featured Products</h2>
           <Link href={"/products"}>
             {" "}
             <Button variant={"outline"} className="rounded-full">
@@ -28,12 +18,10 @@ const FlashSale = async () => {
             </Button>
           </Link>
         </div>
-        <div className="block md:hidden mb-10 md:-mt-0 -mt-6">
-          <Comedown />
-        </div>
+        <Separator />
         {/* category data */}
-        <div className="grid gap-10 lg:gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {products?.slice(2, 5)?.map((product: TProduct) => (
+        <div className="grid gap-10 pt-5 lg:gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          {data?.map((product: TProduct) => (
             <div
               key={product._id}
               style={{
@@ -44,7 +32,7 @@ const FlashSale = async () => {
               className="group border-2 border-white flex w-full max-w-sm mx-auto md:max-w-full flex-col self-center overflow-hidden rounded-lg"
             >
               <a
-                className="relative mx-3 mt-2 flex h-60 lg:h-60 overflow-hidden rounded-xl"
+                className="relative mx-3 mt-2 flex h-60 lg:h-44 overflow-hidden rounded-xl"
                 href="#"
               >
                 <img
@@ -75,43 +63,29 @@ const FlashSale = async () => {
                 {/* <span class="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">39% OFF</span> */}
               </a>
               <div className="mt-4 px-5 pb-5">
-                <p className="text-[16px] pb-2 items-center flex gap-2 text-black">
-                  <FaStar className="text-yellow-500" />: 5.00
-                </p>
                 <div>
                   <Link
                     href={`/user/shop/products/details-product/${product?._id}`}
                   >
                     {" "}
-                    <h5 className="text-xl tracking-tight font-semibold text-black">
+                    <h5 className="text-xl tracking-tight font-bold text-black">
                       {product?.name}
                     </h5>
                   </Link>
                 </div>
-                <p className="text-[16px] pb-2 pt-2 items-center flex gap-2 text-black">
-                  {product?.description.slice(0, 30)}
-                </p>
-                <div className="mb-5 flex items-center justify-between">
-                  <h4 className="text-xl tracking-tight font-semibold text-black">
-                    Price:{" "}
-                    <span className="text-gray-800">
-                      $
-                      {Math.floor((product?.offerPrice as number) + 1) ?? "N/A"}
+                <div className="mt-2 mb-5 flex items-center justify-between">
+                  <p>
+                    <span className="text-[16px] text-black">
+                      Price: ${product?.price}
                     </span>
-                    <del className="ml-2 text-[16px] text-gray-500">
-                      ${product.price ?? "N/A"}
-                    </del>
-                  </h4>
+                  </p>
+                  <p className="text-[16px]  items-center flex gap-2 text-black">
+                    <FaStar className="text-yellow-500" />: 5.00
+                  </p>
                 </div>
               </div>
               <div className="px-5 pb-5 -mt-5">
                 <div className="flex gap-3 ">
-                  <button className="bg-transparent rounded-full border border-customcolor">
-                    <FaHeart className="text-[38px] text-customcolor p-2" />
-                  </button>
-                  <button className="bg-transparent rounded-full border border-customcolor">
-                    <FaShoppingCart className="text-[38px] text-customcolor p-2" />
-                  </button>
                   <Button
                     disabled={!product.stock}
                     variant={"outline"}
@@ -120,7 +94,17 @@ const FlashSale = async () => {
                     {" "}
                     <FaCartArrowDown /> Add to cart{" "}
                   </Button>
+                  <button className="bg-transparent rounded-full border border-customcolor">
+                    <FaHeart className="text-[38px] text-customcolor p-2" />
+                  </button>
                 </div>
+                <Button
+                  disabled={!product.stock}
+                  className="w-full mt-4 rounded-full"
+                >
+                  {" "}
+                  <FaCartArrowDown /> Buy Now{" "}
+                </Button>
               </div>
             </div>
           ))}
@@ -130,4 +114,4 @@ const FlashSale = async () => {
   );
 };
 
-export default FlashSale;
+export default Products;
