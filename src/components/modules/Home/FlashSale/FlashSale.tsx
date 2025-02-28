@@ -8,13 +8,13 @@ import {
   FaShoppingCart,
   FaStar,
 } from "react-icons/fa";
-import Comedown from "./Comedown";
+import Comedown from "./Comedowns";
 
-const FlashDeals = async () => {
+const FlashSale = async () => {
   const { data: products } = await getAllProduct();
   return (
     <section className="py-16 md:py-32">
-      <div className=" container">
+      <div className="">
         {/* header section category */}
         <div className="flex justify-between rounded-full mb-10">
           <h2 className="text-2xl md:text-3xl font-bold">Flash Deals</h2>
@@ -93,7 +93,14 @@ const FlashDeals = async () => {
                 </p>
                 <div className="mb-5 flex items-center justify-between">
                   <h4 className="text-xl tracking-tight font-semibold text-black">
-                    Price: ${product?.price}
+                    Price:{" "}
+                    <span className="text-gray-800">
+                      $
+                      {Math.floor((product?.offerPrice as number) + 1) ?? "N/A"}
+                    </span>
+                    <del className="ml-2 text-[20px] text-gray-500">
+                      ${product.price ?? "N/A"}
+                    </del>
                   </h4>
                 </div>
               </div>
@@ -123,4 +130,4 @@ const FlashDeals = async () => {
   );
 };
 
-export default FlashDeals;
+export default FlashSale;

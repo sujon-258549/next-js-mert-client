@@ -84,7 +84,10 @@ const Navbar = () => {
                   <DropdownMenuContent className="mt-5 bg-customcolor text-white w-[200px]">
                     <DropdownMenuLabel>My Account</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>Dashboard</DropdownMenuItem>
+                    <DropdownMenuItem>
+                      {" "}
+                      <Link href={"user/dashboard"}>Dashboard</Link>
+                    </DropdownMenuItem>
                     <DropdownMenuItem>Profile</DropdownMenuItem>
                     <DropdownMenuItem>My Shop</DropdownMenuItem>
                     <DropdownMenuItem>My Order</DropdownMenuItem>

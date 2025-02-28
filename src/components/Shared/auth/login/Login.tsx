@@ -43,7 +43,8 @@ const Login = () => {
   } = from;
   const email = from.watch("email");
   const password = from.watch("password");
-  const isDisabled = !email || !password || !recaptaStatus;
+  //   || !recaptaStatus
+  const isDisabled = !email || !password;
   const handelRecapta = async (value: string | null) => {
     try {
       const res = await verifyRecapta(value!);

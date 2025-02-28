@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { TCategoryData } from "@/types";
@@ -12,9 +13,13 @@ import {} from "@/components/ui/dialog";
 import Link from "next/link";
 import { IoMdAdd } from "react-icons/io";
 import { deleteProduct } from "@/server/Product";
+import { Checkbox } from "@/components/ui/checkbox";
+import { useState } from "react";
+import AddFlashSale from "./AddFlashSale";
 const Products = ({ data, meta }: TCategoryData) => {
-  console.log(meta, data);
-
+  //   console.log(meta);
+  const [productId, setProductId] = useState<string[] | []>([]);
+  console.log(productId);
   const handelDeleteCategory = async (productId: string) => {
     try {
       const result = await Swal.fire({
@@ -50,6 +55,36 @@ const Products = ({ data, meta }: TCategoryData) => {
 
   const columns: ColumnDef<TCategoryData>[] = [
     {
+      id: "select",
+      header: ({ table }) => (
+        <Checkbox
+          checked={
+            table.getIsAllPageRowsSelected() ||
+            (table.getIsSomePageRowsSelected() && "indeterminate")
+          }
+          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+          aria-label="Select all"
+        />
+      ),
+      cell: ({ row }) => (
+        <Checkbox
+          checked={row.getIsSelected()}
+          onCheckedChange={(value) => {
+            if (value) {
+              setProductId((prev) => [...prev, row?.original?._id]);
+            } else {
+              setProductId(productId.filter((id) => id !== row?.original?._id));
+            }
+            row.toggleSelected(!!value);
+          }}
+          aria-label="Select row"
+        />
+      ),
+      enableSorting: false,
+      enableHiding: false,
+    },
+
+    {
       accessorKey: "name",
       header: "Name",
     },
@@ -83,6 +118,10 @@ const Products = ({ data, meta }: TCategoryData) => {
     {
       accessorKey: "price",
       header: "Price",
+    },
+    {
+      accessorKey: "offerPrice",
+      header: "Offer Price",
     },
     {
       accessorKey: "imageUrls",
@@ -130,14 +169,17 @@ const Products = ({ data, meta }: TCategoryData) => {
         <div>
           <h1 className="text-2xl font-bold">Manage Products</h1>
         </div>
-        <Button>
-          <Link
-            className="flex gap-2 items-center"
-            href={"/user/shop/products/add-product"}
-          >
-            Add Product <IoMdAdd />{" "}
-          </Link>
-        </Button>
+        <div className="flex gap-3">
+          <Button>
+            <Link
+              className="flex gap-2 items-center"
+              href={"/user/shop/products/add-product"}
+            >
+              Add Product <IoMdAdd />{" "}
+            </Link>
+          </Button>
+          <AddFlashSale products={productId} />
+        </div>
       </div>
 
       {/* @ts-expect-error data */}
