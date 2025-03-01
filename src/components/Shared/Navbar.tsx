@@ -49,9 +49,12 @@ const Navbar = () => {
           {/* User Actions */}
           <div className="flex gap-2">
             {/* Cart Button */}
-            <button className="bg-transparent rounded-full border border-customcolor">
+            <Link
+              href={"/cart"}
+              className="bg-transparent rounded-full border border-customcolor"
+            >
               <FaShoppingCart className="text-customcolor text-[38px] p-2" />
-            </button>
+            </Link>
 
             {/* Wishlist Button */}
             <button className="bg-transparent rounded-full border border-customcolor">

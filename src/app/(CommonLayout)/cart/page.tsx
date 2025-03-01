@@ -1,5 +1,19 @@
+import ShoppingCart from "@/components/modules/cart/CartMani";
+import ProductContact from "@/components/modules/Products/banner/Contact/Contact";
+import CommonBanner from "@/components/modules/Products/banner/ProductBanner";
+
 const CartPage = () => {
-  return <div>CartPage</div>;
+  return (
+    <div className="pt-10">
+      <CommonBanner title="Cart Page" path="Home - Cart Page" />
+      <ShoppingCart />
+      <section className="mt-10">
+        <div className="container ">
+          <ProductContact />
+        </div>
+      </section>
+    </div>
+  );
 };
 
 export default CartPage;
