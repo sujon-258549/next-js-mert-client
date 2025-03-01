@@ -1,16 +1,19 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Category, TProduct } from "@/types";
+import { TProduct } from "@/types";
 import Link from "next/link";
 import { FaCartArrowDown, FaHeart, FaStar } from "react-icons/fa";
 
 const Products = async ({ data }: { data: TProduct[] }) => {
   return (
-    <section className="">
-      <div className=" container">
+    <section className="w-full">
+      <div className="">
         {/* header section category */}
         <div className="flex justify-between rounded-full mb-5">
-          <h2 className="text-2xl md:text-3xl font-bold">Featured Products</h2>
+          <div className="flex gap-3 items-center">
+            <h2 className="text-[18px] font-semibold">Featured Products</h2>
+            <Button className="bg-black rounded-full">Clear Filters</Button>
+          </div>
           <Link href={"/products"}>
             {" "}
             <Button variant={"outline"} className="rounded-full">
@@ -32,7 +35,7 @@ const Products = async ({ data }: { data: TProduct[] }) => {
               className="group border-2 border-white flex w-full max-w-sm mx-auto md:max-w-full flex-col self-center overflow-hidden rounded-lg"
             >
               <a
-                className="relative mx-3 mt-2 flex h-60 lg:h-44 overflow-hidden rounded-xl"
+                className="relative mx-3 mt-2 bg-slate-400 p-5 flex h-60 lg:h-44 overflow-hidden rounded-xl"
                 href="#"
               >
                 <img
@@ -65,12 +68,10 @@ const Products = async ({ data }: { data: TProduct[] }) => {
               <div className="mt-4 px-5 pb-5">
                 <div>
                   <Link
-                    href={`/user/shop/products/details-product/${product?._id}`}
+                    className="text-xl tracking-tight font-bold text-black"
+                    href={`/products/details-product/${product?._id}`}
                   >
-                    {" "}
-                    <h5 className="text-xl tracking-tight font-bold text-black">
-                      {product?.name}
-                    </h5>
+                    {product?.name}
                   </Link>
                 </div>
                 <div className="mt-2 mb-5 flex items-center justify-between">

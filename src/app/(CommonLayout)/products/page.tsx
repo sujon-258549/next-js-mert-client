@@ -11,7 +11,7 @@ const Products = async () => {
     <div className="container">
       <Banner />
       <FutureCollection />
-      <div className="flex">
+      <div className="flex gap-5 mb-10 md:mb-20">
         <ProductSidebar />
         <Product data={data} />
       </div>

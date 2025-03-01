@@ -8,7 +8,7 @@ type THadding = {
 
 const CommonBanner = ({ title, path }: THadding) => {
   return (
-    <section className="mt-10">
+    <section className="mt-5 container">
       <div className={`${styles.productBanner}`}>
         <div className="mx-auto py-10">
           <h3 className="text-[28px] text-center font-semibold">{title}</h3>

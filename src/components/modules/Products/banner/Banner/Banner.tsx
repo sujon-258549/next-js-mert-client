@@ -1,4 +1,4 @@
-import CommonBanner from "../CommonBanner";
+import CommonBanner from "../ProductBanner";
 
 const Banner = () => {
   return (
