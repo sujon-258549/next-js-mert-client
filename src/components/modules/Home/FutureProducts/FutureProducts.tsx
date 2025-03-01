@@ -64,11 +64,9 @@ const FutureProducts = async () => {
               </a>
               <div className="mt-4 px-5 pb-5">
                 <div>
-                  <Link
-                    href={`/user/shop/products/details-product/${product?._id}`}
-                  >
+                  <Link href={`/products/details-product/${product?._id}`}>
                     {" "}
-                    <h5 className="text-xl tracking-tight font-bold text-black">
+                    <h5 className="text-xl tracking-tight font-bold text-customcolor">
                       {product?.name}
                     </h5>
                   </Link>

@@ -1,4 +1,5 @@
 import Banner from "@/components/modules/Products/banner/Banner/Banner";
+import ProductContact from "@/components/modules/Products/banner/Contact/Contact";
 import FutureCollection from "@/components/modules/Products/banner/FutureCollection/FutureCollection";
 import Product from "@/components/modules/Products/banner/sideber/Product";
 import ProductSidebar from "@/components/modules/Products/banner/sideber/ProductSidebar";
@@ -15,6 +16,7 @@ const Products = async () => {
         <ProductSidebar />
         <Product data={data} />
       </div>
+      <ProductContact />
     </div>
   );
 };

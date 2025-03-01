@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Minus, Plus, Star } from "lucide-react";
 import { TProduct } from "@/types";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import ProductContact from "../Contact/Contact";
 
 const ProductDetails = ({ data }: { data: TProduct }) => {
   console.log(data);
@@ -229,6 +230,9 @@ const ProductDetails = ({ data }: { data: TProduct }) => {
           </div>
         </Tabs>
       </section>
+      <div className="pt-10">
+        <ProductContact />
+      </div>
     </section>
   );
 };

@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { getAllProduct } from "@/server/Product";
 import { TProduct } from "@/types";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { FaCartArrowDown } from "react-icons/fa";
 
@@ -60,8 +61,10 @@ const Product = () => {
             </a>
             <div className="mt-4 px-5 pb-5">
               <a href="#">
-                <h5 className="text-xl tracking-tight text-black">
-                  {product?.name}
+                <h5 className="text-xl font-semibold tracking-tight text-customcolor">
+                  <Link href={`/products/details-product/${product?._id}`}>
+                    {product?.name}
+                  </Link>
                 </h5>
               </a>
               <div className="mt-2 mb-5 flex items-center justify-between">

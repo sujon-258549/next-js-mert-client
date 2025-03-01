@@ -79,11 +79,8 @@ const FlashSale = async () => {
                   <FaStar className="text-yellow-500" />: 5.00
                 </p>
                 <div>
-                  <Link
-                    href={`/user/shop/products/details-product/${product?._id}`}
-                  >
-                    {" "}
-                    <h5 className="text-xl tracking-tight font-semibold text-black">
+                  <Link href={`/products/details-product/${product?._id}`}>
+                    <h5 className="text-xl tracking-tight font-semibold text-customcolor">
                       {product?.name}
                     </h5>
                   </Link>
