@@ -1,10 +1,17 @@
+import PagePagination from "@/components/modules/paginaction/Pagination";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { TProduct } from "@/types";
+import { TPagination, TProduct } from "@/types";
 import Link from "next/link";
 import { FaCartArrowDown, FaHeart, FaStar } from "react-icons/fa";
 
-const Products = async ({ data }: { data: TProduct[] }) => {
+const Products = async ({
+  data,
+  meta,
+}: {
+  data: TProduct[];
+  meta: TPagination;
+}) => {
   return (
     <section className="w-full">
       <div className="">
@@ -68,7 +75,7 @@ const Products = async ({ data }: { data: TProduct[] }) => {
               <div className="mt-4 px-5 pb-5">
                 <div>
                   <Link
-                    className="text-xl tracking-tight font-bold text-black"
+                    className="text-xl tracking-tight font-bold text-customcolor"
                     href={`/products/details-product/${product?._id}`}
                   >
                     {product?.name}
@@ -110,6 +117,7 @@ const Products = async ({ data }: { data: TProduct[] }) => {
             </div>
           ))}
         </div>
+        <PagePagination meta={meta} />
       </div>
     </section>
   );

@@ -8,10 +8,13 @@ import { FaCartArrowDown } from "react-icons/fa";
 
 const Product = () => {
   const [products, setProducts] = useState<TProduct[] | []>([]);
+
   useEffect(() => {
     const fetchdata = async () => {
       const [productsData] = await Promise.all([getAllProduct()]);
-      setProducts(productsData.data);
+      const { data } = productsData;
+
+      setProducts(data);
     };
     fetchdata();
   }, []);

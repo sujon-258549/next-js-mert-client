@@ -6,15 +6,21 @@ import ProductSidebar from "@/components/modules/Products/banner/sideber/Product
 import { getAllProduct } from "@/server/Product";
 import React from "react";
 
-const Products = async () => {
-  const { data } = await getAllProduct();
+const Products = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ page: string }>;
+}) => {
+  // @ts-expect-error page
+  const { page } = searchParams;
+  const { data, meta } = await getAllProduct(page, "6");
   return (
     <div className="container">
       <Banner />
       <FutureCollection />
       <div className="flex gap-5 mb-10 md:mb-20">
         <ProductSidebar />
-        <Product data={data} />
+        <Product data={data} meta={meta} />
       </div>
       <ProductContact />
     </div>
