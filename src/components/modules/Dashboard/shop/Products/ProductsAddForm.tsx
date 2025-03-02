@@ -152,7 +152,8 @@ const ProductsAddForm = () => {
       console.error(error);
     }
   };
-
+  //   const category = form.watch("category");
+  //   console.log(category);
   return (
     <section className="px-5 my-10">
       <div className="max-w-2xl mx-auto">

@@ -51,8 +51,8 @@ const UpdateProductForm = ({ productdata }: any) => {
       name: productdata.name || "",
       description: productdata.description || "",
       price: productdata.price || "",
-      category: productdata?.category?.name || "",
-      brand: productdata?.brand?.name || "",
+      category: productdata?.category?._id || "",
+      brand: productdata?.brand?._id || "",
       stock: productdata.stock || "",
       weight: productdata.weight || "",
       availableColors: productdata.availableColors.map(
@@ -73,7 +73,8 @@ const UpdateProductForm = ({ productdata }: any) => {
   const {
     formState: { isSubmitting },
   } = form;
-
+  const category = form.watch("category");
+  console.log(category);
   const { append: appendColor, fields: fieldColor } = useFieldArray({
     control: form.control,
     name: "availableColors",
@@ -149,11 +150,13 @@ const UpdateProductForm = ({ productdata }: any) => {
         formData.append("images", file);
       }
       const result = await updateProduct(formData, productdata?._id);
+      console.log(result);
       if (result?.success) {
         toast.success(result?.message, { id: toastId, duration: 2000 });
         router.push("/user/shop/products");
         // Redirect or perform other actions on success
       } else {
+        console.log(result.message);
         toast.error(result?.message, { id: toastId, duration: 2000 });
       }
     } catch (error: any) {
@@ -236,7 +239,7 @@ const UpdateProductForm = ({ productdata }: any) => {
                       <FormLabel>Category</FormLabel>
                       <Select
                         onValueChange={field.onChange}
-                        defaultValue={productdata?.category?._id || ""}
+                        defaultValue={productdata?.category?.name || ""}
                       >
                         <FormControl>
                           <SelectTrigger>
@@ -246,9 +249,9 @@ const UpdateProductForm = ({ productdata }: any) => {
                         <SelectContent>
                           {categories.map((category: Category) => (
                             <SelectItem
-                              defaultValue={productdata?.category?.name}
+                              defaultValue={productdata?.category?._id}
                               key={category?._id}
-                              value={category._id}
+                              value={category?._id}
                             >
                               {category?.name}
                             </SelectItem>
@@ -267,7 +270,7 @@ const UpdateProductForm = ({ productdata }: any) => {
                       <FormLabel>Brand</FormLabel>
                       <Select
                         onValueChange={field.onChange}
-                        defaultValue={productdata?.brand?._id || ""}
+                        defaultValue={productdata?.brand?.name || ""}
                       >
                         <FormControl>
                           <SelectTrigger>

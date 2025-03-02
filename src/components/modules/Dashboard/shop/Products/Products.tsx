@@ -93,10 +93,10 @@ const Products = ({ data, meta }: TCategoryData) => {
       accessorKey: "category.name",
       header: "Category",
     },
-    {
-      accessorKey: "slug",
-      header: "Slug",
-    },
+    // {
+    //   accessorKey: "slug",
+    //   header: "Slug",
+    // },
     {
       accessorKey: "isActive",
       header: "Active",
@@ -152,9 +152,7 @@ const Products = ({ data, meta }: TCategoryData) => {
               <FaRegEdit />
             </Button>
           </Link>
-          <Link
-            href={`/user/shop/products/details-product/${row?.original?._id}`}
-          >
+          <Link href={`products/details-product/${row?.original?._id}`}>
             <Button>
               <FaExternalLinkAlt />
             </Button>
