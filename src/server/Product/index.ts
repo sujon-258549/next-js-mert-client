@@ -21,15 +21,18 @@ export const createProduct = async (data: FormData) => {
 
 export const getAllProduct = async () => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/product`, {
-      next: {
-        tags: ["PRODUCT"],
-      },
-      method: "GET",
-      headers: {
-        Authorization: (await cookies()).get("accessToken")!.value,
-      },
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/product?limit=2`,
+      {
+        next: {
+          tags: ["PRODUCT"],
+        },
+        method: "GET",
+        headers: {
+          Authorization: (await cookies()).get("accessToken")!.value,
+        },
+      }
+    );
     return res.json();
   } catch (error: any) {
     return Error(error);

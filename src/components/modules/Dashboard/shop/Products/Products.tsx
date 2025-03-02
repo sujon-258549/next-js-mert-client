@@ -16,6 +16,7 @@ import { deleteProduct } from "@/server/Product";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
 import AddFlashSale from "./AddFlashSale";
+import PagePagination from "@/components/modules/paginaction/Pagination";
 const Products = ({ data, meta }: TCategoryData) => {
   //   console.log(meta);
   const [productId, setProductId] = useState<string[] | []>([]);
@@ -184,6 +185,7 @@ const Products = ({ data, meta }: TCategoryData) => {
 
       {/* @ts-expect-error data */}
       <TableComponent data={data} columns={columns} />
+      <PagePagination meta={meta} />
     </section>
   );
 };

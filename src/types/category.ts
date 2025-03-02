@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export type Pagination = {
+export type TPagination = {
   limit: number;
   page: number;
   total: number;
@@ -22,5 +22,5 @@ export type Category = {
 export type TCategoryData = {
   [x: string]: any;
   data: Category[];
-  meta: Pagination;
+  meta: TPagination;
 };
