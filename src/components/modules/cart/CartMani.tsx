@@ -17,6 +17,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import LoaderButton from "@/components/utils/Loader/LoaderButton";
+import { useAppSelector } from "@/redux/hooks";
+import { orderProductSelector, TCartProduct } from "@/redux/features/cartSlice";
+import { TProduct } from "@/types";
 
 const ShoppingCart = () => {
   const [condition, setCondition] = useState(false);
@@ -50,39 +53,8 @@ const ShoppingCart = () => {
       //   });
     }
   };
-  const [cart, setCart] = useState([
-    {
-      id: 1,
-      name: "Apple Vision Pro 256GB Storage Spatial Computer VR Headset",
-      price: 240,
-      quantity: 2,
-      stock: 21,
-      color: "Black",
-    },
-    {
-      id: 2,
-      name: "Apple Vision Pro 256GB Storage Spatial Computer VR Headset",
-      price: 240,
-      quantity: 2,
-      stock: 21,
-      color: "Black",
-    },
-    {
-      id: 3,
-      name: "Apple Vision Pro 256GB Storage Spatial Computer VR Headset",
-      price: 240,
-      quantity: 2,
-      stock: 21,
-      color: "Black",
-    },
-  ]);
 
-  const subtotal = cart.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0
-  );
-  const shippingCost = 22.5;
-  const grandTotal = subtotal + shippingCost;
+  const products = useAppSelector(orderProductSelector);
 
   return (
     <section className="mt-10">
@@ -91,29 +63,30 @@ const ShoppingCart = () => {
         <Card className="md:col-span-2 p-6">
           <div className="flex justify-between">
             <h2 className="text-xl font-semibold">Shopping Cart</h2>
-            <p className="text-gray-500">Total Cart Items: {cart.length}</p>
+            <p className="text-gray-500">Total Cart Items: {products.length}</p>
           </div>
           <div className="mt-4 space-y-4">
-            {cart.map((item) => (
+            {products?.map((product: TCartProduct) => (
               <div
-                key={item.id}
+                key={product._id}
                 className="flex justify-between items-center p-4 bg-gray-100 rounded-lg"
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 bg-gray-300 rounded-lg"></div>
+                  <div className="w-16 h-16 bg-gray-300 rounded-lg">
+                    <img src={product.imageUrls[0]} />
+                  </div>
                   <div>
-                    <h3 className="font-medium">{item.name}</h3>
-                    <p className="text-gray-500">
-                      Color: {item.color} | Stock: {item.stock}
-                    </p>
-                    <p className="font-bold">Price: ${item.price}</p>
+                    <h3 className="font-medium">{product.name}</h3>
+                    <p className="text-gray-500">brand: {product.brand.name}</p>
+                    <p className="font-bold">Price: ${product.price}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
+                  <p>Quantity</p>
                   <Button variant="outline" size="icon">
                     <Minus className="w-4 h-4" />
                   </Button>
-                  <span>{item.quantity}</span>
+                  <span>{product?.orderQuantity}</span>
                   <Button variant="outline" size="icon">
                     <Plus className="w-4 h-4" />
                   </Button>
@@ -170,30 +143,34 @@ const ShoppingCart = () => {
             </Form>
           </Card>
           <Card className="p-6">
-            <h2 className="text-lg font-semibold">Payment Details</h2>
-            <p className="flex justify-between">
-              Subtotal <span>${subtotal.toFixed(2)}</span>
+            <h2 className="text-xl font-bold pb-3">Payment Details</h2>
+            <p className="flex justify-between font-medium">
+              Subtotal <span className="font-bold">$300</span>
             </p>
-            <p className="flex justify-between">
-              Shipping <span>${shippingCost.toFixed(2)}</span>
+            <p className="flex justify-between font-medium py-2">
+              Discount <span className="font-bold">$200</span>
             </p>
-            <p className="flex justify-between font-bold text-lg">
-              Total <span>${grandTotal.toFixed(2)}</span>
+            <p className="flex justify-between font-medium">
+              Shipment cost <span className="font-bold">$150</span>
             </p>
-            <div className="flex gap-2 mt-4">
-              <Checkbox
-                onClick={() => setCondition(!condition)}
-                className=" text-black"
-              />
-              <p className="-mt-1">
-                I have read and agree to the Terms and Conditions, Privacy
-                Policy and Refund and Return Policy
-              </p>
-            </div>
+            <p className="flex justify-between font-medium pt-5">
+              Grand total <span className="font-bold">$1500</span>
+            </p>
+
             <Button disabled={condition} className="mt-4 w-full ">
               Confirm Order
             </Button>
           </Card>
+          <div className="flex gap-2 mt-4">
+            <Checkbox
+              onClick={() => setCondition(!condition)}
+              className=" text-black"
+            />
+            <p className="-mt-1 text-sm">
+              I have read and agree to the Terms and Conditions, Privacy
+              Policy and Refund and Return Policy
+            </p>
+          </div>
         </div>
       </div>
     </section>

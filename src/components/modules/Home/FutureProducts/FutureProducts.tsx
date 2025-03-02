@@ -1,11 +1,17 @@
+"use client";
 import { Button } from "@/components/ui/button";
-import { getAllProduct } from "@/server/Product";
+import { addProduct } from "@/redux/features/cartSlice";
+import { useAppDispatch } from "@/redux/hooks";
 import { TProduct } from "@/types";
 import Link from "next/link";
 import { FaCartArrowDown, FaHeart, FaStar } from "react-icons/fa";
 
-const FutureProducts = async () => {
-  const { data: products } = await getAllProduct();
+const FutureProducts = ({ data }: { data: TProduct[] }) => {
+  console.log(data);
+  const dispatch = useAppDispatch();
+  const handelAddToCart = (product: TProduct) => {
+    dispatch(addProduct(product));
+  };
   return (
     <section className="bg-[#ffffff94] py-16 md:py-32">
       <div className=" container">
@@ -21,7 +27,7 @@ const FutureProducts = async () => {
         </div>
         {/* category data */}
         <div className="grid gap-10 lg:gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
-          {products?.slice(0, 4)?.map((product: TProduct) => (
+          {data?.slice(0, 4)?.map((product: TProduct) => (
             <div
               key={product._id}
               style={{
@@ -88,8 +94,8 @@ const FutureProducts = async () => {
                     disabled={!product.stock}
                     variant={"outline"}
                     className="w-full rounded-full"
+                    onClick={() => handelAddToCart(product)}
                   >
-                    {" "}
                     <FaCartArrowDown /> Add to cart{" "}
                   </Button>
                   <button className="bg-transparent rounded-full border border-customcolor">

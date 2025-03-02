@@ -5,8 +5,11 @@ import FutureProducts from "@/components/modules/Home/FutureProducts/FutureProdu
 import Subscribe from "@/components/modules/Home/Subscribe/Subscribe";
 import TopBrands from "@/components/modules/Home/Brand/TopBrands";
 import FlashSale from "@/components/modules/Home/FlashSale/FlashSale";
+import { getAllProduct } from "@/server/Product";
 
-const CommonPage = () => {
+const CommonPage = async () => {
+  const { data } = await getAllProduct();
+  console.log(data);
   return (
     <div>
       <div className="container">
@@ -14,7 +17,7 @@ const CommonPage = () => {
         <Product />
         <HomeCategory />
       </div>
-      <FutureProducts />
+      <FutureProducts data={data} />
       <div className="container">
         <FlashSale />
         <TopBrands />
