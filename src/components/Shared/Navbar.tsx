@@ -18,6 +18,8 @@ import { LogIn, LogOut } from "lucide-react";
 import { logout } from "@/server/AuthServer";
 import { usePathname, useRouter } from "next/navigation";
 import { protectRoute } from "@/constect";
+import { useAppSelector } from "@/redux/hooks";
+import { orderProductSelector } from "@/redux/features/cartSlice";
 
 const Navbar = () => {
   const { user, setIsLoading } = useUser();
@@ -32,6 +34,7 @@ const Navbar = () => {
     }
     setIsLoading(true);
   };
+  const products = useAppSelector(orderProductSelector);
   return (
     <section className="border-b border-slate-300">
       <div className="container">
@@ -47,17 +50,22 @@ const Navbar = () => {
           </div>
 
           {/* User Actions */}
-          <div className="flex gap-2">
+          <div className="flex gap-2 relative">
             {/* Cart Button */}
+            <div className="">
+              <button className="rounded-full z-0 absolute border px-2 -mt-5 left-3 bg-white">
+                {products?.length}
+              </button>
+            </div>
             <Link
               href={"/cart"}
-              className="bg-transparent rounded-full border border-customcolor"
+              className="bg-transparent bg-white z-10 rounded-full border border-customcolor"
             >
               <FaShoppingCart className="text-customcolor text-[38px] p-2" />
             </Link>
 
             {/* Wishlist Button */}
-            <button className="bg-transparent rounded-full border border-customcolor">
+            <button className="bg-transparent bg-white rounded-full border border-customcolor">
               <FaHeart className="text-[38px] text-customcolor p-2" />
             </button>
 
