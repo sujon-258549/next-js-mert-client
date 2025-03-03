@@ -110,5 +110,7 @@ export const {
   incrementProduct,
   decrementProduct,
   removeProduct,
+  updateShippingAddress,
+  updateCity,
 } = cartSlice.actions;
 export default cartSlice.reducer;
