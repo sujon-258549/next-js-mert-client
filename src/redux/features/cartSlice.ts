@@ -1,3 +1,4 @@
+"use client";
 import { TProduct } from "@/types";
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
@@ -81,11 +82,13 @@ export const orderSelector = (state: RootState) => {
     products: state.product.products.map((product) => ({
       product: product._id,
       quantity: product.orderQuantity,
+      color: "White",
     })),
-    // shippingAddress: `${state.product.}`,
+    shippingAddress: `${state.product.shippingAddress} - ${state.product.city}`,
     paymentMethod: "Online",
   };
 };
+
 export const subTotalSelector = (state: RootState) => {
   return state.product.products.reduce((acc, product) => {
     if (product.offerPrice) {
@@ -94,6 +97,24 @@ export const subTotalSelector = (state: RootState) => {
       return acc + product.price * product.orderQuantity;
     }
   }, 0);
+};
+// sipping cost
+export const sippingCost = (state: RootState) => {
+  if (
+    state.product.city === "Dhaka" &&
+    state.product.city &&
+    state.product.products.length > 0
+  ) {
+    return 60;
+  } else if (
+    state.product.city !== "Dhaka" &&
+    state.product.city &&
+    state.product.products.length > 0
+  ) {
+    return 120;
+  } else {
+    return 0;
+  }
 };
 
 // city
