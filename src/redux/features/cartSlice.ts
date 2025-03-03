@@ -8,10 +8,14 @@ export interface TCartProduct extends TProduct {
 
 interface TInitialState {
   products: TCartProduct[];
+  city: string;
+  shippingAddress: string;
 }
 
 const initialState: TInitialState = {
   products: [],
+  city: "",
+  shippingAddress: "",
 };
 const cartSlice = createSlice({
   name: "cart",
@@ -28,6 +32,8 @@ const cartSlice = createSlice({
       }
       state.products.push({ ...action.payload, orderQuantity: 1 });
     },
+
+    // payment
     incrementProduct: (state, action) => {
       const incrementProductAdd = state.products.find(
         (product) => product._id === action.payload
@@ -55,13 +61,30 @@ const cartSlice = createSlice({
         (product) => product._id !== action.payload
       );
     },
+    updateCity: (state, action) => {
+      state.city = action.payload;
+    },
+    updateShippingAddress: (state, action) => {
+      state.shippingAddress = action.payload;
+    },
     clearProduct: (state) => {
       state.products = [];
     },
   },
 });
+// products
 export const orderProductSelector = (state: RootState) => {
   return state.product.products;
+};
+export const orderSelector = (state: RootState) => {
+  return {
+    products: state.product.products.map((product) => ({
+      product: product._id,
+      quantity: product.orderQuantity,
+    })),
+    // shippingAddress: `${state.product.}`,
+    paymentMethod: "Online",
+  };
 };
 export const subTotalSelector = (state: RootState) => {
   return state.product.products.reduce((acc, product) => {
@@ -71,6 +94,15 @@ export const subTotalSelector = (state: RootState) => {
       return acc + product.price * product.orderQuantity;
     }
   }, 0);
+};
+
+// city
+export const citySelector = (state: RootState) => {
+  return state.product.city;
+};
+//   address
+export const shippingAddressSelector = (state: RootState) => {
+  return state.product.shippingAddress;
 };
 export const {
   addProduct,
