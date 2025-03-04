@@ -71,7 +71,7 @@ const Login = () => {
         if (redirect) {
           router.push(redirect);
         } else {
-          router.push("/profile");
+          router.push("/user/dashboard");
         }
         // window.location.reload();
       } else {

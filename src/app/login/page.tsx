@@ -1,3 +1,4 @@
+// @ts-expect-error
 import Login from "../../components/Shared/auth/login/Login";
 const page = () => {
   return (

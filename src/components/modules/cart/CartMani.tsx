@@ -19,17 +19,22 @@ import {
 import LoaderButton from "@/components/utils/Loader/LoaderButton";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import {
+  citySelector,
   clearProduct,
   decrementProduct,
+  grandtotalSelector,
   incrementProduct,
   orderProductSelector,
   orderSelector,
   removeProduct,
-  sippingCost,
+  shippingAddressSelector,
+  sippingCostSelector,
   subTotalSelector,
   TCartProduct,
 } from "@/redux/features/cartSlice";
 import AddressAndCity from "./AddressAndCity";
+import { Separator } from "@/components/ui/separator";
+import { currencyFormat } from "@/components/utils/table/currencyFormat/currencyFormat";
 
 const ShoppingCart = () => {
   const [condition, setCondition] = useState(false);
@@ -88,8 +93,13 @@ const ShoppingCart = () => {
 
   const products = useAppSelector(orderProductSelector);
   const subTotal = useAppSelector(subTotalSelector);
-  const sippingCostData = useAppSelector(sippingCost);
-
+  const sippingCostData = useAppSelector(sippingCostSelector);
+  const shippingAddressSelectorData = useAppSelector(shippingAddressSelector);
+  const citySelectorData = useAppSelector(citySelector);
+  const granTotalSelectorData = useAppSelector(grandtotalSelector);
+  const disableButtonCondition =
+    !shippingAddressSelectorData || !citySelectorData || !products.length;
+  console.log(condition);
   return (
     <section className="mt-10">
       <div className="grid md:grid-cols-3 gap-8 p-6 container">
@@ -97,7 +107,7 @@ const ShoppingCart = () => {
         <Card className="md:col-span-2 p-6 flex flex-col justify-between">
           <div>
             <div className="flex justify-between">
-              <h2 className="text-xl font-semibold">Shopping Cart</h2>
+              <h2 className="text-xl font-bold">Shopping Cart</h2>
               <p className="text-gray-500">
                 Total Cart Items:{" "}
                 <span className="font-bold text-black text-xl">
@@ -105,10 +115,12 @@ const ShoppingCart = () => {
                 </span>
               </p>
             </div>
+            <Separator className="my-5" />
             <div className="mt-4 space-y-4 md:min-h-[400px]">
               {products.length > 0 ? (
                 products.map((product: TCartProduct) => (
                   <div
+                    style={{ boxShadow: "2px 2px 10px #000" }}
                     key={product._id}
                     className=" md:flex justify-between items-center p-6 bg-gray-100 rounded-2xl shadow-sm"
                   >
@@ -131,7 +143,7 @@ const ShoppingCart = () => {
                         &nbsp; &nbsp;
                         <span className="text-gray-500">
                           Stock Available:{" "}
-                          <span className="font-semibold text-black">
+                          <span className="font-semibold text-black ">
                             {product.stock}
                           </span>
                         </span>
@@ -139,7 +151,10 @@ const ShoppingCart = () => {
                       <hr className="my-2 border-gray-300" />
                       <div className="flex justify-between flex-wrap items-center">
                         <p className="text-lg font-bold">
-                          Price: ${product.price * product.orderQuantity}
+                          Price: $
+                          {currencyFormat(
+                            product.price * product.orderQuantity
+                          )}
                         </p>{" "}
                         <div className="flex items-center gap-3 flex-wrap">
                           <p className="text-gray-500 text-sm">Quantity</p>
@@ -164,11 +179,12 @@ const ShoppingCart = () => {
                           </Button>
                           {/* Remove */}
                           <Button
+                            className="bg-red-500 hover:border text-white"
                             onClick={() => handleRemoveProduct(product._id)}
                             variant="ghost"
                             size="icon"
                           >
-                            <Trash className="w-5 h-5 text-gray-500" />
+                            <Trash className="w-5 h-5" />
                           </Button>
                         </div>
                       </div>
@@ -178,19 +194,21 @@ const ShoppingCart = () => {
                   </div>
                 ))
               ) : (
-                <div>
-                  <h3 className="md:text-3xl text-xl font-bold text-center">
-                    Please Add to Cart
-                  </h3>
-                  <p className="text-gray-500 text-center mt-2 mb-5">
-                    Your cart is currently empty. Browse our products and add
-                    items to your cart!
-                  </p>
-                  <img
-                    src="/mt.png"
-                    className="max-w-[250px] mx-auto"
-                    alt="Empty Cart"
-                  />
+                <div className="flex justify-center items-center min-h-screen">
+                  <div>
+                    <h3 className="md:text-3xl text-xl font-bold text-center">
+                      Please Add to Cart
+                    </h3>
+                    <p className="text-gray-500 text-center mt-2 mb-5">
+                      Your cart is currently empty. Browse our products and add
+                      items to your cart!
+                    </p>
+                    <img
+                      src="/mt.png"
+                      className="max-w-[250px] mx-auto"
+                      alt="Empty Cart"
+                    />
+                  </div>
                 </div>
               )}
             </div>
@@ -216,7 +234,9 @@ const ShoppingCart = () => {
                   name="caponeCod"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Use Coupon Code</FormLabel>
+                      <FormLabel className="text-xl font-bold pb-3">
+                        Use Coupon Code
+                      </FormLabel>
                       <FormControl>
                         <Input
                           {...field}
@@ -250,24 +270,31 @@ const ShoppingCart = () => {
             <h2 className="text-xl font-bold pb-3">Payment Details</h2>
             <p className="flex justify-between font-medium">
               Subtotal{" "}
-              <span className="font-bold">{subTotal ? subTotal : "00"}</span>
+              <span className="font-bold">
+                {subTotal ? currencyFormat(subTotal) : "00"}
+              </span>
             </p>
             <p className="flex justify-between font-medium py-2">
-              Discount <span className="font-bold">$200</span>
+              Discount <span className="font-bold">{currencyFormat(0)}</span>
             </p>
             <p className="flex justify-between font-medium">
               Shipment cost{" "}
               <span className="font-bold">
-                {sippingCostData ? sippingCostData : "00"}
+                {sippingCostData ? currencyFormat(sippingCostData) : "00"}
               </span>
             </p>
             <p className="flex justify-between font-medium pt-5">
-              Grand total <span className="font-bold">$1500</span>
+              Grand total{" "}
+              <span className="font-bold">
+                {granTotalSelectorData
+                  ? currencyFormat(granTotalSelectorData)
+                  : "00"}
+              </span>
             </p>
 
             <Button
               onClick={handelOrder}
-              disabled={condition}
+              disabled={!condition || disableButtonCondition}
               className="mt-4 w-full "
             >
               Confirm Order

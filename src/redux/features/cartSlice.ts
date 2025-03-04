@@ -99,7 +99,7 @@ export const subTotalSelector = (state: RootState) => {
   }, 0);
 };
 // sipping cost
-export const sippingCost = (state: RootState) => {
+export const sippingCostSelector = (state: RootState) => {
   if (
     state.product.city === "Dhaka" &&
     state.product.city &&
@@ -115,6 +115,11 @@ export const sippingCost = (state: RootState) => {
   } else {
     return 0;
   }
+};
+export const grandtotalSelector = (state: RootState) => {
+  const subTotal = subTotalSelector(state);
+  const sippingCost = sippingCostSelector(state);
+  return subTotal + sippingCost;
 };
 
 // city

@@ -36,16 +36,16 @@ const Navbar = () => {
   };
   const products = useAppSelector(orderProductSelector);
   return (
-    <section className="border-b border-slate-300">
+    <section className="border-b z-50 border-slate-300 sticky top-0 left-0 bg-gray-100">
       <div className="container">
-        <section className="flex py-2 justify-center items-center lg:justify-between flex-wrap">
+        <section className="flex py-2  items-center justify-between flex-wrap">
           {/* Logo Section */}
           <Link href={"/"}>
             <Logo />
           </Link>
 
           {/* Search Bar */}
-          <div>
+          <div className="md:block hidden">
             <HomeSearch />
           </div>
 
@@ -53,7 +53,7 @@ const Navbar = () => {
           <div className="flex gap-2 relative">
             {/* Cart Button */}
             <div className="">
-              <button className="rounded-full z-0 absolute border px-2 -mt-5 left-3 bg-white">
+              <button className="rounded-full z-0 absolute border px-2 -mt-1 -left-3 bg-white">
                 {products?.length}
               </button>
             </div>
@@ -121,6 +121,14 @@ const Navbar = () => {
             )}
           </div>
         </section>
+        <div className="block md:hidden max-w-sm mx-auto">
+          <div
+            className="
+          mb-5"
+          >
+            <HomeSearch />
+          </div>
+        </div>
       </div>
     </section>
   );
