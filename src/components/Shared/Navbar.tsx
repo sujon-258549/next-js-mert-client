@@ -58,8 +58,10 @@ const Navbar = () => {
               </button>
             </div>
             <Link
-              href={"/cart"}
-              className="bg-transparent bg-white z-10 rounded-full border border-customcolor"
+              href="/cart"
+              className={`bg-transparent bg-white z-10 rounded-full border border-customcolor ${
+                products.length === 0 ? "pointer-events-none opacity-white" : ""
+              }`}
             >
               <FaShoppingCart className="text-customcolor text-[38px] p-2" />
             </Link>
