@@ -8,8 +8,7 @@ import "react-responsive-pagination/themes/classic.css";
 // 👆 classic theme, see below for other theme / css options
 
 const PagePagination = ({ meta }: { meta: TPagination }) => {
-  const { total, totalPage: totalPages } = meta;
-  console.log(total, totalPages);
+  const { totalPage: totalPages } = meta;
   const [currentPage, setCurrentPage] = useState(1);
   const router = useRouter();
   const path = usePathname();

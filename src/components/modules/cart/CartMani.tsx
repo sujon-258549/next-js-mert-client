@@ -35,6 +35,9 @@ import {
 import AddressAndCity from "./AddressAndCity";
 import { Separator } from "@/components/ui/separator";
 import { currencyFormat } from "@/components/utils/table/currencyFormat/currencyFormat";
+import { useUser } from "@/Context/UserContext";
+import { createOrder } from "@/server/Brand/order";
+import { useRouter } from "next/navigation";
 
 const ShoppingCart = () => {
   const [condition, setCondition] = useState(false);
@@ -61,10 +64,24 @@ const ShoppingCart = () => {
   };
 
   const orderData = useAppSelector(orderSelector);
-
+  const router = useRouter();
   //   order
-  const handelOrder = () => {
-    console.log(orderData);
+  const user = useUser();
+  console.log(user);
+  const handelOrder = async () => {
+    const toastId = toast.loading("Order Creating.................");
+    try {
+      const res = await createOrder(orderData);
+      if (res.success) {
+        toast.success(res?.message, { id: toastId, duration: 2000 });
+        dispatch(clearProduct());
+        router.push(res?.data?.paymentUrl);
+      } else {
+        toast.error(res?.message);
+      }
+    } catch (error: any) {
+      toast.error(error?.message, { id: toastId, duration: 2000 });
+    }
   };
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {

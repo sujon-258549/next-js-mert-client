@@ -20,6 +20,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { protectRoute } from "@/constect";
 import { useAppSelector } from "@/redux/hooks";
 import { orderProductSelector } from "@/redux/features/cartSlice";
+import { toast } from "sonner";
 
 const Navbar = () => {
   const { user, setIsLoading } = useUser();
@@ -35,6 +36,18 @@ const Navbar = () => {
     setIsLoading(true);
   };
   const products = useAppSelector(orderProductSelector);
+  console.log(products.length);
+  const handleClick = () => {
+    if (!user?.email) {
+      toast.error("please login");
+      router.push("/login");
+    } else if (products.length === 0) {
+      router.push("/products");
+      toast.error("Please add product");
+    } else {
+      router.push("/cart");
+    }
+  };
   return (
     <section className="border-b z-50 border-slate-300 sticky top-0 left-0 bg-gray-100">
       <div className="container">
@@ -57,14 +70,12 @@ const Navbar = () => {
                 {products?.length}
               </button>
             </div>
-            <Link
-              href="/cart"
-              className={`bg-transparent bg-white z-10 rounded-full border border-customcolor ${
-                products.length === 0 ? "pointer-events-none opacity-white" : ""
-              }`}
+            <button
+              onClick={handleClick}
+              className="bg-transparent bg-white rounded-full border border-customcolor"
             >
               <FaShoppingCart className="text-customcolor text-[38px] p-2" />
-            </Link>
+            </button>
 
             {/* Wishlist Button */}
             <button className="bg-transparent bg-white rounded-full border border-customcolor">

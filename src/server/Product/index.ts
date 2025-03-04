@@ -29,7 +29,8 @@ export const getAllProduct = async (page?: string, limit?: string) => {
         },
         method: "GET",
         headers: {
-          Authorization: (await cookies()).get("accessToken")!.value,
+          //   Authorization: (await cookies()).get("accessToken")!.value,
+          "Content-Type": "Application/json",
         },
       }
     );

@@ -10,7 +10,7 @@ const Banner = () => {
         <div className={`${styles.banner}`}>
           <div className="rounded-md lg:h-[430px] md:px-10 px-8 mx-auto py-10 lg:py-0 flex flex-col lg:flex-row-reverse  gap-5 items-center">
             {/* Right Image (Appears First on Mobile) */}
-            <div className="w-full lg:w-[40%] relative   lg:-mt-20 h-[100%] md:h-[450px]">
+            <div className="w-full lg:w-[40%] relative  h-[100%] md:h-[450px]">
               <Image
                 src={bannerPng}
                 alt="Black Friday Banner"
@@ -38,12 +38,12 @@ const Banner = () => {
               </p>
 
               {/* Buttons */}
-              <div className="flex  gap-3">
+              <div className="md:flex  gap-3">
                 <Button className="inline-flex  w-full md:w-32 items-center rounded-full hover:text-black text-white justify-center px-5 py-3 text-base font-medium border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100">
                   Buy Now
                 </Button>
                 <Link href={"/products"} className="w-full">
-                  <Button className="inline-flex w-full md:w-32 rounded-full items-center hover:text-white justify-center px-5 py-3 text-base font-medium border border-gray-300 bg-transparent hover:bg-customcolor text-black focus:ring-4 focus:ring-gray-100">
+                  <Button className="inline-flex w-full mt-4 md:mt-0 md:w-32 rounded-full items-center hover:text-white justify-center px-5 py-3 text-base font-medium border border-gray-300 bg-transparent hover:bg-customcolor text-black focus:ring-4 focus:ring-gray-100">
                     All Products
                   </Button>
                 </Link>

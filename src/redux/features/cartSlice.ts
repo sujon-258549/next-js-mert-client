@@ -70,6 +70,8 @@ const cartSlice = createSlice({
     },
     clearProduct: (state) => {
       state.products = [];
+      state.city = "";
+      state.shippingAddress = "";
     },
   },
 });

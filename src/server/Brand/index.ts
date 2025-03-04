@@ -28,7 +28,8 @@ export const getAllBrand = async () => {
       },
       method: "GET",
       headers: {
-        Authorization: (await cookies()).get("accessToken")!.value,
+        "Content-Type": "Application/json",
+        // Authorization: (await cookies()).get("accessToken")!.value,
       },
     });
 
