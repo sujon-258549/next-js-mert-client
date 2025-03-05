@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import React from "react";
 import {
   Form,
   FormControl,
@@ -18,10 +19,8 @@ import { Textarea } from "@/components/ui/textarea";
 import ImagePreviewer from "@/components/ui/core/ImageUploder/ImagePreviewer";
 import { toast } from "sonner";
 import { createStore } from "@/server/Shop";
-import { zodResolver } from "@hookform/resolvers/zod";
 
 import LoaderButton from "@/components/utils/Loader/LoaderButton";
-import { shopSchema } from "./createShop.ts";
 
 const CreateShop = () => {
   const [image, setImage] = useState<File[] | []>([]);

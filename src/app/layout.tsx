@@ -21,12 +21,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <Provider>
-      <html lang="en">
-        <body className={`${urbanistFont.className}`}>
+    <html lang="en">
+      <body className={`${urbanistFont.className}`}>
+        <Provider>
           <Toaster richColors position="top-center" /> {children}
-        </body>
-      </html>
-    </Provider>
+        </Provider>
+      </body>
+    </html>
   );
 }

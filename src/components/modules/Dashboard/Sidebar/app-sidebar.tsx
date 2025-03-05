@@ -3,6 +3,7 @@
 import * as React from "react";
 import {
   BotIcon,
+  CornerUpLeftIcon,
   Frame,
   Map,
   PieChart,
@@ -56,6 +57,10 @@ const data = {
         {
           title: "Manage Brands",
           url: "/user/shop/manage-brands",
+        },
+        {
+          title: "Manage Coupon",
+          url: "/user/coupon",
         },
       ],
     },
