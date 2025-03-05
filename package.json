@@ -41,6 +41,7 @@
     "react-paginate": "^8.3.0",
     "react-redux": "^9.2.0",
     "react-responsive-pagination": "^2.10.2",
+    "redux-persist": "^6.0.0",
     "sass": "^1.85.1",
     "sonner": "^2.0.1",
     "sweetalert2": "^11.17.2",
