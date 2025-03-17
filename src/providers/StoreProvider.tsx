@@ -1,5 +1,5 @@
 "use client";
-import Loader from "@/app/(CommonLayout)/loading";
+import Loader from "@/app/loading";
 import { AppStore, makeStore } from "@/redux/store";
 import { useRef } from "react";
 import { Provider } from "react-redux";
