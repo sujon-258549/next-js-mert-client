@@ -19,7 +19,7 @@ const CommonPage = async () => {
       </div>
       <FutureProducts data={data} />
       <div className="container">
-        <FlashSale data={data} />
+        <FlashSale data={data0} />
         <TopBrands />
         <Subscribe />
       </div>

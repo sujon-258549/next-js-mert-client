@@ -1,3 +1,4 @@
+"use client";
 import Error from "@/components/modules/Error/Error";
 
 const ErrorPage = () => {
