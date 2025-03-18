@@ -47,13 +47,20 @@ export const getAllBrand = async () => {
   }
 };
 export const deleteBrand = async (brandId: string): Promise<any> => {
+  const cookiesStore = await cookies();
+  let token = cookiesStore.get("accessToken")!.value;
+  if (!token || (await isTokenExpired(token))) {
+    const { data } = await newToken();
+    token = data?.accessToken;
+    cookiesStore.set("accessToken", token);
+  }
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/brand/${brandId}`,
       {
         method: "DELETE",
         headers: {
-          Authorization: (await cookies()).get("accessToken")!.value,
+          Authorization: token,
         },
       }
     );
