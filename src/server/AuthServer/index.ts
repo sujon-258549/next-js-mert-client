@@ -17,6 +17,7 @@ export const registerUser = async (userInfo: FieldValues) => {
     const result = await res.json();
     if (result?.success) {
       (await cookies()).set("accessToken", result?.data?.accessToken);
+      (await cookies()).set("refreshToken", result?.data?.refreshToken);
     }
     return result;
   } catch (error: any) {
@@ -41,6 +42,7 @@ export const loginUser = async (userData: FieldValues) => {
 
     if (result.success) {
       (await cookies()).set("accessToken", result.data.accessToken);
+      (await cookies()).set("refreshToken", result?.data?.refreshToken);
     }
 
     return result;
@@ -78,5 +80,27 @@ export const getCurrentUser = async () => {
     return decodedData;
   } else {
     return null;
+  }
+};
+
+// create new token
+export const newToken = async () => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/refresh-token`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: (await cookies()).get("refreshToken")!.value,
+        },
+      }
+    );
+
+    const result = await res.json();
+
+    return result;
+  } catch (error: any) {
+    return Error(error);
   }
 };

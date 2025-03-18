@@ -6,8 +6,11 @@ import Subscribe from "@/components/modules/Home/Subscribe/Subscribe";
 import TopBrands from "@/components/modules/Home/Brand/TopBrands";
 import FlashSale from "@/components/modules/Home/FlashSale/FlashSale";
 import { getAllProduct } from "@/server/Product";
+import { newToken } from "@/server/AuthServer";
 
 const CommonPage = async () => {
+  const createToken = await newToken();
+  console.log(createToken);
   const { data } = await getAllProduct();
   console.log(data);
   return (
@@ -19,7 +22,7 @@ const CommonPage = async () => {
       </div>
       <FutureProducts data={data} />
       <div className="container">
-        <FlashSale data={data0} />
+        <FlashSale data={data} />
         <TopBrands />
         <Subscribe />
       </div>

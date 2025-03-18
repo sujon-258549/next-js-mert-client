@@ -1,15 +1,23 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
+import { isTokenExpired } from "@/lib/isTokenExpired";
 import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
+import { newToken } from "../AuthServer";
 
 export const createBrand = async (data: FormData) => {
-  console.log(data);
+  const cookiesStore = await cookies();
+  let token = cookiesStore.get("accessToken")!.value;
+  if (!token || (await isTokenExpired(token))) {
+    const { data } = await newToken();
+    token = data?.accessToken;
+    cookiesStore.set("accessToken", token);
+  }
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/brand`, {
       method: "POST",
       headers: {
-        Authorization: (await cookies()).get("accessToken")!.value,
+        Authorization: token,
       },
       body: data,
     });
