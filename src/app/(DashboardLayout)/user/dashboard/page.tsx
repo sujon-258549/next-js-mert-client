@@ -7,9 +7,7 @@ const DashboardPage = () => {
           <div className="aspect-video rounded-xl  bg-customcolor" />
           <div className="aspect-video rounded-xl  bg-customcolor" />
         </div>
-        <div className="min-h-screen w-full flex-1 rounded-xl  bg-customcolor md:min-h-min">
-          c
-        </div>
+        <div className="min-h-screen w-full flex-1 rounded-xl  bg-customcolor"></div>
       </div>
     </div>
   );

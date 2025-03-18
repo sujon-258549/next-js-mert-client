@@ -1,16 +1,29 @@
+"use client";
 import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
+import { TCategoryData } from "@/types";
 import { Star } from "lucide-react";
-
-const ProductSidebar = () => {
+import { useState } from "react";
+type TProductSidebarProps = {
+  data: {
+    categories: TCategoryData[];
+    brands: TCategoryData[];
+  };
+};
+const ProductSidebar = ({ data }: TProductSidebarProps) => {
+  const { categories, brands } = data;
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedBrand, setSelectedBrand] = useState("");
+  const [selectedRating, setSelectedRating] = useState<number | null>(null);
+  console.log(selectedRating);
   return (
     <Card className="w-64 p-4 border rounded-lg bg-white">
       {/* Filter By Price */}
       <div className="mb-6">
         <h3 className="font-semibold">Filter By Price</h3>
-        <div className="flex gap-2 mt-2">
+        <div className="flex gap-2 ">
           <input
             type="text"
             placeholder="Min"
@@ -22,49 +35,71 @@ const ProductSidebar = () => {
             className="border p-1 rounded w-1/2"
           />
         </div>
-        <Slider className="mt-2" defaultValue={[0]} max={1000} step={10} />
+        <div className="flex justify-between mt-5">
+          <p>0$</p>
+          <p>500000$</p>
+        </div>
+        <Slider className="mt-3" defaultValue={[0]} max={1000} step={10} />
       </div>
 
       {/* Product Types */}
-      <div className="mb-6">
-        <h3 className="font-semibold">Product Types</h3>
-        {[
-          "Laptop & Accessories",
-          "Computers-Pc",
-          "Speakers & Headset",
-          "Keyboards & Mouse",
-          "Camera",
-          "Video Recording",
-          "Tablets",
-          "Table Lights",
-        ].map((type) => (
-          <div key={type} className="flex items-center space-x-2 mt-1">
-            <Checkbox id={type} />
-            <Label htmlFor={type}>{type}</Label>
-          </div>
-        ))}
-      </div>
+      <h3 className="font-semibold">Filter By Category</h3>
+      {categories.map((category) => (
+        <div key={category._id} className="flex items-center space-x-2 mt-1">
+          <input
+            type="radio"
+            id={category._id}
+            name="productCategory"
+            value={category.name}
+            checked={selectedCategory === category.name}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className="w-4 h-4"
+          />
+          <label
+            htmlFor={category._id}
+            className="text-gray-700 cursor-pointer"
+          >
+            {category.name}
+          </label>
+        </div>
+      ))}
 
       {/* Brands */}
-      <div className="mb-6">
-        <h3 className="font-semibold">Brands</h3>
-        {["HP (15)", "Apple (58)", "Dell (64)", "Asus (11)", "Camera"].map(
-          (brand) => (
-            <div key={brand} className="flex items-center space-x-2 mt-1">
-              <Checkbox id={brand} />
-              <Label htmlFor={brand}>{brand}</Label>
-            </div>
-          )
-        )}
-      </div>
+      <h3 className="font-semibold mt-5">Filter By Brands</h3>
+      {brands.map((brand) => (
+        <div key={brand._id} className="flex items-center space-x-2 mt-1">
+          <input
+            type="radio"
+            id={brand._id}
+            name="productCategory"
+            value={brand.name}
+            checked={selectedBrand === brand.name}
+            onChange={(e) => setSelectedBrand(e.target.value)}
+            className="w-4 h-4"
+          />
+          <label htmlFor={brand._id} className="text-gray-700 cursor-pointer">
+            {brand.name}
+          </label>
+        </div>
+      ))}
 
       {/* Rating */}
       <div className="mb-6">
         <h3 className="font-semibold">Rating</h3>
         {[5, 4, 3, 2, 1].map((rating) => (
           <div key={rating} className="flex items-center space-x-2 mt-1">
-            <Checkbox id={`rating-${rating}`} />
-            <Label htmlFor={`rating-${rating}`} className="flex items-center">
+            <input
+              onChange={() => setSelectedRating(rating)}
+              checked={selectedRating === rating}
+              type="radio"
+              id={`rating-${rating}`}
+              name="rating"
+              //   className="hidden"
+            />
+            <label
+              htmlFor={`rating-${rating}`}
+              className="flex items-center cursor-pointer"
+            >
               {Array.from({ length: 5 }).map((_, index) => (
                 <Star
                   key={index}
@@ -76,7 +111,7 @@ const ProductSidebar = () => {
                   }
                 />
               ))}
-            </Label>
+            </label>
           </div>
         ))}
       </div>
