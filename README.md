@@ -25,6 +25,7 @@ https://www.google.com/recaptcha/admin/site/719291506/setup
 <!-- Verify -->
 
 https://developers.google.com/recaptcha/docs/verify
+https://developers.google.com/recaptcha/docs/verify
 
 <!-- npm recapta -->
 
