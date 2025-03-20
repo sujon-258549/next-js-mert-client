@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { TCategoryData } from "@/types";
 import { Star } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 type TProductSidebarProps = {
   data: {
@@ -18,8 +19,11 @@ const ProductSidebar = ({ data }: TProductSidebarProps) => {
   const [selectedBrand, setSelectedBrand] = useState("");
   const [selectedRating, setSelectedRating] = useState<number | null>(null);
   const [price, setPrice] = useState([0]);
+  const router = useRouter();
+  const pathname = usePathname();
   const handelSearchCategory = (query: string, value: string | number) => {
     console.log(query, value);
+    router.push(`${pathname}?${query}=${value.toString()}`, { scroll: false });
   };
   return (
     <Card className="w-64 p-4 border rounded-lg bg-white">
