@@ -18,7 +18,9 @@ const ProductSidebar = ({ data }: TProductSidebarProps) => {
   const [selectedBrand, setSelectedBrand] = useState("");
   const [selectedRating, setSelectedRating] = useState<number | null>(null);
   const [price, setPrice] = useState([0]);
-  console.log(selectedRating);
+  const handelSearchCategory = (query: string, value: string | number) => {
+    console.log(query, value);
+  };
   return (
     <Card className="w-64 p-4 border rounded-lg bg-white">
       {/* Filter By Price */}
@@ -59,7 +61,8 @@ const ProductSidebar = ({ data }: TProductSidebarProps) => {
             id={category._id}
             name="productCategory"
             value={category._id}
-            checked={selectedCategory === category.name}
+            onClick={() => handelSearchCategory("category", category._id)}
+            checked={selectedCategory === category._id}
             onChange={(e) => setSelectedCategory(e.target.value)}
             className="w-4 h-4"
           />
