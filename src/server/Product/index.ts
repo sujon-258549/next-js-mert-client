@@ -22,11 +22,25 @@ export const createProduct = async (data: FormData) => {
 export const getAllProduct = async (
   page?: string,
   limit?: string,
-  query?: Record<string, string>
+  query?: { [kye: string]: string | string[] | undefined }
 ) => {
+  const params = new URLSearchParams();
+  if (query?.price) {
+    params.append("minPrice", "0");
+    params.append("maxPrice", query?.price.toString());
+  }
+  if (query?.category) {
+    params.append("category", query?.category.toString());
+  }
+  if (query?.brand) {
+    params.append("brand", query?.brand.toString());
+  }
+  if (query?.ratingCount) {
+    params.append("brand", query?.ratingCount.toString());
+  }
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/product?limit=${limit}&page=${page}`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/product?limit=${limit}&page=${page}&${params}`,
       {
         next: {
           tags: ["PRODUCT"],

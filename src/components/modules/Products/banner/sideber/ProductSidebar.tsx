@@ -53,7 +53,7 @@ const ProductSidebar = ({ data }: TProductSidebarProps) => {
           className="mt-3"
           defaultValue={price}
           max={500000}
-          step={10}
+          step={1}
           onValueChange={(value) => {
             setPrice(value);
             handelSearchCategory("price", value[0]);
