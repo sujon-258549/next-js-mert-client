@@ -32,7 +32,7 @@ const ProductSidebar = ({ data }: TProductSidebarProps) => {
     <Card className="w-64 p-4 border rounded-lg bg-white">
       {/* Filter By Price */}
       <div className="mb-6">
-        <h3 className="font-semibold">Filter By Price</h3>
+        <h3 className="font-semibold mb-3">Filter By Price</h3>
         <div className="flex gap-2 ">
           <input
             type="text"
