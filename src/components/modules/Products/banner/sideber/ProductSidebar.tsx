@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { TCategoryData } from "@/types";
 import { Star } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 type TProductSidebarProps = {
   data: {
@@ -21,9 +21,12 @@ const ProductSidebar = ({ data }: TProductSidebarProps) => {
   const [price, setPrice] = useState([0]);
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const handelSearchCategory = (query: string, value: string | number) => {
-    console.log(query, value);
-    router.push(`${pathname}?${query}=${value.toString()}`, { scroll: false });
+    const params = new URLSearchParams(searchParams.toString());
+    params.set(query, value.toString());
+    // router.push(`${pathname}?${query}=${value.toString()}`, { scroll: false });
+    router.push(`${pathname}?${params}`, { scroll: false }); //multiple querysearchparams add to search params
   };
   return (
     <Card className="w-64 p-4 border rounded-lg bg-white">
