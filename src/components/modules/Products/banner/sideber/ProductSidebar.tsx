@@ -26,7 +26,7 @@ const ProductSidebar = ({ data }: TProductSidebarProps) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set(query, value.toString());
     // router.push(`${pathname}?${query}=${value.toString()}`, { scroll: false });
-    router.push(`${pathname}?${params}`, { scroll: false }); //multiple querysearchparams add to search params
+    router.push(`${pathname}?${params.toString()}`, { scroll: false }); //multiple querysearchparams add to search params
   };
   return (
     <Card className="w-64 p-4 border rounded-lg bg-white">
