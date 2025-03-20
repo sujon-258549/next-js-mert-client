@@ -58,7 +58,7 @@ const ProductSidebar = ({ data }: TProductSidebarProps) => {
             type="radio"
             id={category._id}
             name="productCategory"
-            value={category.name}
+            value={category._id}
             checked={selectedCategory === category.name}
             onChange={(e) => setSelectedCategory(e.target.value)}
             className="w-4 h-4"
