@@ -17,6 +17,7 @@ const ProductSidebar = ({ data }: TProductSidebarProps) => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedBrand, setSelectedBrand] = useState("");
   const [selectedRating, setSelectedRating] = useState<number | null>(null);
+  const [price, setPrice] = useState([0]);
   console.log(selectedRating);
   return (
     <Card className="w-64 p-4 border rounded-lg bg-white">
@@ -39,7 +40,14 @@ const ProductSidebar = ({ data }: TProductSidebarProps) => {
           <p>0$</p>
           <p>500000$</p>
         </div>
-        <Slider className="mt-3" defaultValue={[0]} max={1000} step={10} />
+        <Slider
+          className="mt-3"
+          defaultValue={price}
+          max={500000}
+          step={10}
+          onValueChange={(value) => setPrice(value)} // Update state on change
+        />
+        <p className="mt-4">Selected Price: {price[0]}</p>
       </div>
 
       {/* Product Types */}
