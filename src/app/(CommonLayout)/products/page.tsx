@@ -8,14 +8,17 @@ import { getAllCategory } from "@/server/Category";
 import { getAllProduct } from "@/server/Product";
 import React from "react";
 
+type searchParams = Promise<{ [kye: string]: string | string[] | undefined }>;
+
 const Products = async ({
   searchParams,
 }: {
-  searchParams: Promise<{ page: string }>;
+  searchParams: { searchParams: searchParams };
 }) => {
   // @ts-expect-error page
   const { page } = searchParams;
-  const { data, meta } = await getAllProduct(page, "6");
+  const query = await searchParams;
+  const { data, meta } = await getAllProduct(page, "6", query);
   const res = await getAllCategory();
   const brands = await getAllBrand();
 

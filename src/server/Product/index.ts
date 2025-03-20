@@ -19,7 +19,11 @@ export const createProduct = async (data: FormData) => {
   }
 };
 
-export const getAllProduct = async (page?: string, limit?: string) => {
+export const getAllProduct = async (
+  page?: string,
+  limit?: string,
+  query?: Record<string, string>
+) => {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/product?limit=${limit}&page=${page}`,
