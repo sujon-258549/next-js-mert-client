@@ -51,7 +51,10 @@ const ProductSidebar = ({ data }: TProductSidebarProps) => {
           defaultValue={price}
           max={500000}
           step={10}
-          onValueChange={(value) => setPrice(value)} // Update state on change
+          onValueChange={(value) => {
+            setPrice(value);
+            handelSearchCategory("price", value[0]);
+          }} // Update state on change
         />
         <p className="mt-4">Selected Price: {price[0]}</p>
       </div>
@@ -86,11 +89,12 @@ const ProductSidebar = ({ data }: TProductSidebarProps) => {
           <input
             type="radio"
             id={brand._id}
-            name="productCategory"
-            value={brand.name}
-            checked={selectedBrand === brand.name}
+            name="productBrand"
+            value={brand._id}
+            checked={selectedBrand === brand._id}
             onChange={(e) => setSelectedBrand(e.target.value)}
             className="w-4 h-4"
+            onClick={() => handelSearchCategory("brand", brand._id)}
           />
           <label htmlFor={brand._id} className="text-gray-700 cursor-pointer">
             {brand.name}
@@ -109,6 +113,7 @@ const ProductSidebar = ({ data }: TProductSidebarProps) => {
               type="radio"
               id={`rating-${rating}`}
               name="rating"
+              onClick={() => handelSearchCategory("rating", rating)}
               //   className="hidden"
             />
             <label
